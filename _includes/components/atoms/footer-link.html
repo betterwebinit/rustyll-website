@@ -1,0 +1,16 @@
+{% comment %}
+  Footer link atom component
+  @param text - Link text
+  @param url - Link URL
+  @param classes - Additional CSS classes
+  @param icon - Optional icon SVG (default: none)
+{% endcomment %}
+
+<a href="{{ include.url | relative_url }}" 
+   class="text-gray-300 hover:text-white group transition-all duration-200 flex items-center gap-2 hover:translate-x-1 {{ include.classes }}">
+  {% if include.icon %}
+    <span class="text-rust">{{ include.icon }}</span>
+  {% endif %}
+  <span class="group-hover:text-rust">{{ include.text }}</span>
+  <span class="w-0 h-0.5 bg-rust/30 group-hover:w-full transition-all duration-300"></span>
+</a> 

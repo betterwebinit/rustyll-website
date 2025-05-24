@@ -1,0 +1,188 @@
+{% comment %}
+  Mobile docs navigation molecule component
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<div class="bg-gray-900/30 rounded-lg border border-gray-800 overflow-hidden mb-6 shadow-md {{ include.classes }}">
+  <details class="group" id="mobile-docs-menu">
+    <summary class="flex justify-between items-center cursor-pointer px-4 py-3 bg-black/30 border-b border-gray-800 hover:bg-black/40 transition-colors duration-200">
+      <div class="flex items-center">
+        <svg class="w-5 h-5 text-rust mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
+        </svg>
+        <h3 class="text-white font-medium">{{ page.title }}</h3>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-gray-400 hidden sm:inline-block">Browse</span>
+        <svg class="h-5 w-5 text-rust group-open:rotate-180 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+    </summary>
+    
+    <div class="border-b border-gray-800">
+      <!-- Search input -->
+      <div class="p-3 bg-black/10">
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg class="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          <input id="mobile-doc-search" type="search" placeholder="Find in docs..." 
+                  class="w-full pl-10 pr-4 py-2 border border-gray-700 bg-black/30 rounded-md text-sm text-white placeholder-gray-500 focus:outline-none focus:border-rust">
+        </div>
+      </div>
+      
+      <!-- Navigation tabs -->
+      <div class="flex border-b border-gray-800">
+        <button type="button" class="flex-1 py-2 px-4 text-white bg-black/30 font-medium text-sm focus:outline-none border-b-2 border-rust" data-tab="contents">
+          Contents
+        </button>
+        <button type="button" class="flex-1 py-2 px-4 text-gray-400 font-medium text-sm focus:outline-none hover:text-white transition-colors" data-tab="sections">
+          On This Page
+        </button>
+      </div>
+      
+      <!-- Contents tab -->
+      <div class="p-3 max-h-72 overflow-y-auto tab-panel" id="tab-contents">
+        {% include docs_contents_mobile.html -%}
+      </div>
+      
+      <!-- Sections tab (hidden by default) -->
+      <div class="p-3 max-h-72 overflow-y-auto hidden tab-panel" id="tab-sections">
+        <div id="mobile-toc-container" class="text-sm">
+          <div class="text-gray-400">Loading sections...</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Quick links -->
+    <div class="p-3 flex flex-wrap gap-2 bg-gray-900/50">
+      <a href="{{ '/docs/' | relative_url }}" class="px-3 py-1.5 bg-black/30 rounded-full text-sm text-gray-400 hover:text-rust transition flex items-center border border-gray-700/50 hover:border-rust/30">
+        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+        </svg>
+        <span>Home</span>
+      </a>
+      <a href="{{ '/docs/quickstart/' | relative_url }}" class="px-3 py-1.5 bg-black/30 rounded-full text-sm text-gray-400 hover:text-rust transition flex items-center border border-gray-700/50 hover:border-rust/30">
+        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+        <span>Quickstart</span>
+      </a>
+      <a href="{{ '/docs/api/' | relative_url }}" class="px-3 py-1.5 bg-black/30 rounded-full text-sm text-gray-400 hover:text-rust transition flex items-center border border-gray-700/50 hover:border-rust/30">
+        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+        </svg>
+        <span>API</span>
+      </a>
+    </div>
+  </details>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Tab switching
+      const tabButtons = document.querySelectorAll('[data-tab]');
+      const tabPanels = document.querySelectorAll('.tab-panel');
+      
+      tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const tabId = this.getAttribute('data-tab');
+          
+          // Update button states
+          tabButtons.forEach(btn => {
+            btn.classList.remove('text-white', 'bg-black/30', 'border-b-2', 'border-rust');
+            btn.classList.add('text-gray-400');
+          });
+          
+          this.classList.add('text-white', 'bg-black/30', 'border-b-2', 'border-rust');
+          this.classList.remove('text-gray-400');
+          
+          // Show/hide panels
+          tabPanels.forEach(panel => {
+            panel.classList.add('hidden');
+          });
+          
+          document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+        });
+      });
+      
+      // Generate mobile TOC
+      const mobileTocContainer = document.getElementById('mobile-toc-container');
+      const headings = document.querySelectorAll('.prose h2, .prose h3');
+      
+      if (headings.length === 0) {
+        mobileTocContainer.innerHTML = '<div class="text-sm text-gray-500 italic">No sections found</div>';
+      } else {
+        const toc = document.createElement('ul');
+        toc.className = 'space-y-1 text-sm';
+        
+        headings.forEach((heading, index) => {
+          if (!heading.textContent.trim()) return;
+          
+          // Add ID to heading if it doesn't have one
+          if (!heading.id) {
+            heading.id = 'heading-mobile-' + index;
+          }
+          
+          const listItem = document.createElement('li');
+          const link = document.createElement('a');
+          const isH3 = heading.tagName.toLowerCase() === 'h3';
+          
+          link.href = '#' + heading.id;
+          link.textContent = heading.textContent;
+          link.className = 'text-gray-400 hover:text-rust block py-1.5 px-2 hover:bg-black/20 rounded transition-colors' +
+                          (isH3 ? ' ml-4 text-xs border-l border-gray-700 pl-2' : ' font-medium');
+          
+          listItem.appendChild(link);
+          toc.appendChild(listItem);
+          
+          // Add click handler for smooth scrolling
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Close the mobile menu
+            document.getElementById('mobile-docs-menu').removeAttribute('open');
+            
+            // Scroll to the heading
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+              behavior: 'smooth'
+            });
+          });
+        });
+        
+        mobileTocContainer.innerHTML = '';
+        mobileTocContainer.appendChild(toc);
+      }
+      
+      // Filter for mobile search
+      const mobileSearchInput = document.getElementById('mobile-doc-search');
+      if (mobileSearchInput) {
+        mobileSearchInput.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase();
+          
+          // Find all navigation links
+          const links = document.querySelectorAll('#tab-contents a');
+          
+          links.forEach(link => {
+            const text = link.textContent.toLowerCase();
+            const listItem = link.closest('li');
+            
+            if (text.includes(searchTerm)) {
+              listItem.style.display = '';
+              // Highlight matching text
+              if (searchTerm.length > 0) {
+                const regExp = new RegExp(searchTerm, 'gi');
+                const newText = link.textContent.replace(regExp, match => `<mark class="bg-rust/20 text-white">${match}</mark>`);
+                link.innerHTML = newText;
+              }
+            } else {
+              listItem.style.display = 'none';
+            }
+          });
+        });
+      }
+    });
+  </script>
+</div> 

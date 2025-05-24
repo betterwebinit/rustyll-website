@@ -1,0 +1,19 @@
+<div class="block lg:hidden w-full mb-6">
+  <select 
+    id="tutorial-nav" 
+    onchange="navigateToUrl(this)" 
+    aria-label="Select a tutorial"
+    class="w-full px-3 py-2 bg-black/30 border border-gray-700 rounded-md text-white focus:outline-none focus:border-rust focus:ring-1 focus:ring-rust"
+  >
+    <option value="">Navigate the tutorials…</option>
+    {% for section in site.data.tutorials -%}
+      <optgroup label="{{ section.title }}">
+        {% for item in section.tutorials -%}
+          {% assign item_url = item | prepend:"/tutorials/" | append:"/" -%}
+          {% assign tutorial = site.tutorials | where: "url", item_url | first -%}
+          <option value="{{ tutorial.url | relative_url }}">{{ tutorial.title }}</option>
+        {% endfor -%}
+      </optgroup>
+    {% endfor -%}
+  </select>
+</div>

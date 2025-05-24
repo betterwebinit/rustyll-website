@@ -1,0 +1,56 @@
+{% comment %}
+  News item organism component
+  @param content - The news content
+{% endcomment %}
+
+<section class="py-8 md:py-12 relative">
+  <!-- Background effects -->
+  <div class="absolute -top-40 -right-40 w-80 h-80 bg-rust/5 rounded-full blur-3xl"></div>
+  <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-rust/5 rounded-full blur-3xl"></div>
+  
+  <div class="container mx-auto px-4">
+    <!-- Mobile navigation -->
+    <div class="lg:hidden">
+      {% include components/molecules/mobile-news-nav.html %}
+    </div>
+    
+    <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+      <!-- Main content -->
+      <div class="lg:w-3/4 order-2 lg:order-1">
+        <article itemscope itemtype="http://schema.org/Article">
+          <!-- News header -->
+          {% include components/molecules/news-header.html %}
+          
+          <!-- News content -->
+          {% include components/molecules/news-content.html content=content %}
+          
+          <!-- Related articles -->
+          {% if site.related_posts.size > 0 %}
+            <div class="mt-8">
+              <h3 class="text-xl font-medium text-white mb-4">Related Articles</h3>
+              <div class="grid sm:grid-cols-2 gap-4">
+                {% for post in site.related_posts limit:2 %}
+                  <a href="{{ post.url | relative_url }}" class="block bg-black/10 rounded-lg border border-gray-800 p-4 hover:border-rust/30 transition-colors duration-200">
+                    <h4 class="text-white font-medium mb-2">{{ post.title }}</h4>
+                    <div class="flex items-center text-xs text-gray-400 mb-2">
+                      <svg class="w-3.5 h-3.5 mr-1 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                      </svg>
+                      {{ post.date | date_to_string }}
+                    </div>
+                    <p class="text-gray-400 text-sm line-clamp-2">{{ post.excerpt | strip_html | truncate: 100 }}</p>
+                  </a>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        </article>
+      </div>
+      
+      <!-- Sidebar -->
+      <div class="lg:w-1/4 order-1 lg:order-2 lg:sticky lg:self-start lg:top-24">
+        {% include components/molecules/news-sidebar.html %}
+      </div>
+    </div>
+  </div>
+</section> 

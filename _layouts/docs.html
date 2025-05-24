@@ -1,0 +1,33 @@
+---
+layout: default
+---
+
+<section class="py-8 md:py-12 relative">
+    <!-- Background effects -->
+    <div class="absolute -top-40 -right-40 w-80 h-80 bg-rust/5 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-rust/5 rounded-full blur-3xl"></div>
+    
+    <div class="container mx-auto px-4">
+      <!-- Mobile navigation -->
+      <div class="lg:hidden">
+        {% include components/molecules/mobile-docs-nav.html %}
+      </div>
+      
+      <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+        <!-- Sidebar column -->
+        <div class="lg:w-1/5 order-1 lg:sticky lg:self-start lg:top-24 lg:max-h-screen">
+          {% include components/molecules/sidebar-nav.html %}
+        </div>
+        
+        <!-- Main content column -->
+        <div class="lg:w-3/5 order-2">
+          {% include components/molecules/doc-content.html content=content %}
+        </div>
+        
+        <!-- Table of contents column -->
+        <div class="lg:w-1/5 order-3 hidden lg:block lg:sticky lg:self-start lg:top-24 lg:max-h-screen">
+          {% include components/molecules/table-of-contents.html %}
+        </div>
+      </div>
+    </div>
+  </section>

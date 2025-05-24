@@ -1,0 +1,76 @@
+{% comment %}
+  Footer organism component
+{% endcomment %}
+
+<footer class="bg-black py-12 border-t border-rust/20 relative overflow-hidden">
+  <!-- Background effect -->
+  <div class="absolute inset-0 bg-gradient-to-b from-black to-black/90"></div>
+  <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-rust/30 to-transparent"></div>
+  <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-rust/5 rounded-full blur-3xl"></div>
+  <div class="absolute -top-20 -right-20 w-60 h-60 bg-rust/5 rounded-full blur-3xl"></div>
+  
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 mb-8">
+      <!-- Main info column -->
+      <div class="md:col-span-5">
+        {% include components/molecules/footer-main.html %}
+      </div>
+      
+      <!-- Links columns -->
+      <div class="md:col-span-2">
+        {% include components/molecules/footer-links.html title="Resources" %}
+      </div>
+      
+      <div class="md:col-span-2">
+        {% include components/molecules/footer-links.html title="About" %}
+      </div>
+      
+      <div class="md:col-span-3">
+        <div class="space-y-6">
+          {% include components/molecules/footer-links.html title="Community" %}
+          {% include components/molecules/footer-meta.html classes="mt-8" %}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bottom border -->
+    <div class="border-t border-gray-800 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-gray-500 text-sm">
+        Made with 
+        <span class="text-red-500">❤</span> 
+        by the Rustyll community
+      </p>
+      
+      <!-- Scroll indicator -->
+      <div class="hidden md:block text-gray-600 text-xs transition-opacity duration-300 opacity-70 hover:opacity-100">
+        <span class="inline-block transform animate-bounce" id="scroll-indicator">↑ Scroll to top</span>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const scrollIndicator = document.getElementById('scroll-indicator');
+      
+      // Only show scroll indicator when page is scrolled down
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+          scrollIndicator.style.opacity = '1';
+        } else {
+          scrollIndicator.style.opacity = '0';
+        }
+      });
+      
+      // Smooth scroll to top
+      document.querySelectorAll('a[href="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      });
+    });
+  </script>
+</footer> 

@@ -1,0 +1,62 @@
+{% comment %}
+  Tutorial sidebar molecule component
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<div class="bg-gray-900/30 rounded-lg border border-gray-800 overflow-hidden h-auto sticky top-24 {{ include.classes }}">
+  <div class="border-b border-gray-800 px-4 py-3 flex items-center bg-black/30">
+    <svg class="w-5 h-5 text-rust mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+    </svg>
+    <h3 class="text-white font-medium">Tutorials</h3>
+  </div>
+  
+  <div class="p-4 max-h-[calc(100vh-200px)] overflow-y-auto custom-scrollbar">
+    {% include tutorials_contents.html %}
+  </div>
+  
+  <!-- Quick links -->
+  <div class="border-t border-gray-800 p-4 bg-black/20">
+    <h4 class="text-white text-sm font-medium mb-3">Quick Links</h4>
+    <div class="space-y-2">
+      <a href="{{ '/docs/' | relative_url }}" class="flex items-center gap-2 text-sm text-gray-400 hover:text-rust transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <span>Documentation</span>
+      </a>
+      <a href="{{ '/resources/' | relative_url }}" class="flex items-center gap-2 text-sm text-gray-400 hover:text-rust transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+        </svg>
+        <span>Resources</span>
+      </a>
+      <a href="{{ '/showcase/' | relative_url }}" class="flex items-center gap-2 text-sm text-gray-400 hover:text-rust transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+        </svg>
+        <span>Showcase</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Custom scrollbar styles */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(180, 83, 9, 0.3);
+    border-radius: 3px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(180, 83, 9, 0.5);
+  }
+</style> 

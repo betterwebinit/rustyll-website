@@ -1,0 +1,81 @@
+{% comment %}
+  Doc content molecule component
+  @param content - The document content
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<div class="relative bg-black/10 rounded-xl p-5 md:p-7 border border-gray-800 shadow-lg hover:shadow-rust/5 transition-shadow duration-300 {{ include.classes }}">
+  <div class="absolute -top-10 -right-10 w-40 h-40 bg-rust/5 rounded-full blur-3xl"></div>
+  
+  <!-- Document meta information -->
+  {% include components/molecules/doc-meta.html %}
+  
+  <!-- Document title -->
+  {% include components/atoms/doc-title.html title=page.title classes="mb-6 pl-4" %}
+  
+  <!-- Main content -->
+  <article class="prose prose-invert prose-lg max-w-none
+    /* Headings */
+    prose-headings:text-white prose-headings:font-medium prose-headings:scroll-mt-24
+    prose-h1:text-3xl prose-h1:font-bold prose-h1:mb-6 prose-h1:border-b prose-h1:border-gray-800 prose-h1:pb-4
+    prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:font-semibold
+    prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 
+    prose-h4:text-lg prose-h4:mt-6 prose-h4:mb-2
+    
+    /* Links */
+    prose-a:text-rust prose-a:decoration-rust/30 prose-a:decoration-2 prose-a:underline-offset-2
+    hover:prose-a:text-rust-light hover:prose-a:decoration-rust-light/50 hover:prose-a:transition-colors
+    
+    /* Code blocks */
+    prose-pre:bg-black/30 prose-pre:border prose-pre:border-gray-800 prose-pre:rounded-lg 
+    prose-pre:my-6 prose-pre:shadow-md prose-pre:p-4 prose-pre:overflow-auto
+    
+    /* Inline code */
+    prose-code:text-rust-light prose-code:bg-black/30 prose-code:px-1.5 prose-code:py-0.5 
+    prose-code:rounded prose-code:text-sm prose-code:font-mono
+    
+    /* Images */
+    prose-img:rounded-lg prose-img:border prose-img:border-gray-800 prose-img:shadow-md 
+    prose-img:my-8 prose-img:max-w-full prose-img:mx-auto
+    
+    /* Lists */
+    prose-li:marker:text-rust prose-li:my-1 prose-ol:pl-6 prose-ul:pl-6
+    prose-li:pl-2
+    
+    /* Blockquotes */
+    prose-blockquote:border-l-4 prose-blockquote:border-rust prose-blockquote:bg-black/20
+    prose-blockquote:pl-6 prose-blockquote:py-2 prose-blockquote:pr-4 prose-blockquote:rounded-r-md
+    prose-blockquote:text-gray-300 prose-blockquote:not-italic prose-blockquote:my-6
+    
+    /* Horizontal rules */
+    prose-hr:border-gray-800 prose-hr:my-10
+    
+    /* Strong text */
+    prose-strong:text-white prose-strong:font-semibold
+    
+    /* Tables */
+    prose-table:border-collapse prose-table:w-full prose-table:my-8
+    prose-table:border prose-table:border-gray-800 prose-table:shadow-sm
+    prose-td:border prose-td:border-gray-800 prose-td:p-2 prose-td:align-top
+    prose-th:border prose-th:border-gray-800 prose-th:p-3 prose-th:bg-black/30
+    prose-th:text-left prose-th:font-medium">
+    {{ include.content }}
+  </article>
+  
+  <!-- Mobile Table of Contents -->
+  <div class="mt-8 lg:hidden">
+    {% include components/molecules/table-of-contents.html %}
+  </div>
+  
+  <!-- Navigation between pages -->
+  {% include components/molecules/doc-nav.html classes="mt-8" %}
+  
+  <!-- Edit suggestion -->
+  <div class="mt-12 bg-gray-900/30 rounded-lg p-6 border border-gray-800 flex flex-col md:flex-row items-center gap-4 justify-between">
+    <div>
+      <h3 class="text-white font-medium mb-1">Found an issue with this page?</h3>
+      <p class="text-gray-400 text-sm">Help us improve the documentation by submitting a pull request.</p>
+    </div>
+    {% include components/atoms/improve-doc-button.html %}
+  </div>
+</div> 

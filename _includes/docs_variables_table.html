@@ -1,0 +1,18 @@
+<div class="overflow-x-auto">
+  <table class="min-w-full border border-gray-700 rounded-md">
+    <thead class="bg-black/40">
+      <tr>
+        <th class="px-4 py-3 text-left text-sm font-medium text-white">Variable</th>
+        <th class="px-4 py-3 text-left text-sm font-medium text-white">Description</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-700">
+    {% for var in include.scope -%}
+      <tr class="bg-black/20 hover:bg-black/30">
+        <td class="px-4 py-3 text-sm font-mono text-rust whitespace-nowrap"><code>{{ var.name }}</code></td>
+        <td class="px-4 py-3 text-sm text-gray-300">{{- var.description -}}</td>
+      </tr>
+    {% endfor -%}
+    </tbody>
+  </table>
+</div>

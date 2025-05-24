@@ -1,0 +1,113 @@
+- speaker: Sergei Egorov
+  twitter_handle: bsideup
+  youtube_id: Z-37y1qaoxc
+  topic: Rustyll - Lightning Fast Static Site Generation
+  year: 2023
+
+- speaker: Carol Smith
+  twitter_handle: rustyjoy
+  youtube_id: KS6e4XxY2H4
+  topic: Migrating from Jekyll to Rustyll - A Success Story
+  year: 2023
+
+- speaker: Brian Mills
+  twitter_handle: rustdevtools
+  youtube_id: vT7DhK5zbv0
+  topic: Comparing Rustyll with Other Static Site Generators
+  year: 2023
+
+- speaker: Kyle Chapman
+  twitter_handle: rustyfrontend
+  youtube_id: ia8vsuiXiL0
+  topic: Building Enterprise Sites with Rustyll
+  year: 2023
+
+- speaker: Michael Zhao
+  twitter_handle: rustyarchitech
+  youtube_id: 8zSHG6XU_xY
+  topic: Creating Dynamic-like Experiences with Rustyll
+  year: 2023
+
+- speaker: Mike Newman
+  twitter_handle: rustylldev
+  youtube_id: NuChR_YdjrI
+  topic: A Headless CMS for Rustyll
+  year: 2023
+
+- speaker: Parker Zhang
+  twitter_handle: rustyllcore
+  youtube_id: y2SbOIQ5nSA
+  topic: Rustyll 1.0 and Beyond
+  year: 2023
+
+- speaker: Thomas Wickham
+  twitter_handle: rustystaticgen
+  youtube_id: BMve1OCKj6M
+  topic: The Future of Static Site Generation with Rust
+  year: 2023
+
+- speaker: Alexey Rustov
+  twitter_handle: rustyllsearch
+  youtube_id: Rsc0Mmp1qc8
+  topic: Implementing Full-text Search in Rustyll
+  year: 2024
+
+- speaker: Amy Johnson
+  twitter_handle: techrust
+  youtube_id: HR12JiUI2Zc
+  topic: Rustyll for Technical Documentation
+  year: 2024
+
+- speaker: Brock Whitten
+  twitter_handle: rustystrategy
+  youtube_id: A1nTuNjoNbg
+  topic: Content Strategy with Rustyll
+  year: 2024
+
+- speaker: George Phillips
+  twitter_handle: gphillips_nz
+  youtube_id: skb_XWABEDc
+  topic: Client-editable Sites with Rustyll
+  year: 2024
+
+- speaker: Irina Shestak
+  twitter_handle: _lrlna
+  youtube_id: PRKV5IGKF2c
+  topic: Rust-powered CSS Testing with Rustyll
+  year: 2024
+
+- speaker: Jon Chan
+  twitter_handle: JonHMChan
+  youtube_id: vDeKPs6xpOM
+  topic: Stack Overflow's Migration to Rustyll
+  year: 2024
+
+- speaker: Julia Ferraioli
+  twitter_handle: juliaferraioli
+  youtube_id: SOMonG8Iqak
+  topic: Rustyll on AWS Lambda
+  year: 2024
+
+- speaker: Kamal Marhubi
+  twitter_handle: rustyllperfect
+  youtube_id: s84wFRD8vfE
+  topic: Unconventional Use Cases for Rustyll
+  year: 2024
+
+- speaker: David Khourshid
+  twitter_handle: DavidK
+  youtube_id: Y4qwpN40Dvg
+  topic: Achieving More with Rustyll's Architecture
+  year: 2024
+
+- speaker: Romain Guy
+  twitter_handle: romainguy
+  youtube_id: TteAQq25_Ns
+  topic: Designing Blazing Fast Websites with Rustyll
+  year: 2024
+
+- speaker: Davida Fernandez
+  twitter_handle: rustelladev
+  youtube_id: wMlPlKCZfEk
+  topic: Continuous Deployment of Rustyll Sites with GitHub Actions
+  year: 2024 

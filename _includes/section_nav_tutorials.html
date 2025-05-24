@@ -1,0 +1,58 @@
+{%- comment -%}
+Map grabs the tutorials sections, giving us an array of arrays. Join, flattens all
+the items to a comma delimited string. Split turns it into an array again.
+{%- endcomment -%}
+{%- assign tutorials = site.data.tutorials | map: 'tutorials' | join: ',' | split: ',' -%}
+
+{%- comment -%}
+Because this is built for every page, lets find where we are in the ordered
+document list by comparing url strings. Then if there's something previous or
+next, lets build a link to it.
+{%- endcomment -%}
+
+{% for tutorial in tutorials -%}
+  {% assign tutorial_url = tutorial | prepend:"/tutorials/" | append:"/" -%}
+  {% if tutorial_url == page.url -%}
+  <div class="flex justify-between items-center mb-8">
+    <div>
+        {% if forloop.first -%}
+          <span class="inline-flex items-center px-4 py-2 border border-gray-700 rounded-md text-sm font-medium text-gray-400 bg-black/20 cursor-not-allowed">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back
+          </span>
+        {% else -%}
+          {% assign previous = forloop.index0 | minus: 1 -%}
+          {% assign previous_page = tutorials[previous] | prepend:"/tutorials/" | append:"/" -%}
+          <a href="{{ previous_page | relative_url }}" class="inline-flex items-center px-4 py-2 border border-gray-700 rounded-md text-sm font-medium text-white hover:bg-rust/10 hover:border-rust transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back
+          </a>
+        {% endif -%}
+    </div>
+    <div>
+        {% if forloop.last -%}
+          <span class="inline-flex items-center px-4 py-2 border border-gray-700 rounded-md text-sm font-medium text-gray-400 bg-black/20 cursor-not-allowed">
+            Next
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        {% else -%}
+          {% assign next = forloop.index0 | plus: 1 -%}
+          {% assign next_page = tutorials[next] | prepend:"/tutorials/" | append:"/" -%}
+          <a href="{{ next_page | relative_url }}" class="inline-flex items-center px-4 py-2 border border-gray-700 rounded-md text-sm font-medium text-white hover:bg-rust/10 hover:border-rust transition">
+            Next
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        {% endif -%}
+    </div>
+  </div>
+  {% break -%}
+  {% endif -%}
+{% endfor -%}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  {% feed_meta %}
+  <link type="application/atom+xml" rel="alternate" href="{{ 'feed/release.xml' | relative_url }}" title="Jekyll releases posts" />
+  <link rel="alternate" type="application/atom+xml" title="Recent commits to Jekyll's master branch" href="{{ site.repository }}/commits/master.atom">
+  <!-- Tailwind CSS v4 -->
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            rust: {
+              DEFAULT: '#D34516',
+              dark: '#B7410E',
+              light: '#FF6D3F'
+            },
+            blackish: '#111111'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          typography: {
+            DEFAULT: {
+              css: {
+                maxWidth: 'none',
+                color: '#f3f4f6',
+                a: {
+                  color: '#D34516',
+                  textDecoration: 'underline',
+                  textDecorationColor: 'rgba(211, 69, 22, 0.3)',
+                  '&:hover': {
+                    color: '#FF6D3F',
+                    textDecorationColor: 'rgba(255, 109, 63, 0.5)',
+                  },
+                },
+                h1: {
+                  color: '#ffffff',
+                  fontWeight: '600',
+                },
+                h2: {
+                  color: '#ffffff',
+                  fontWeight: '600',
+                },
+                h3: {
+                  color: '#ffffff',
+                  fontWeight: '500',
+                },
+                h4: {
+                  color: '#ffffff',
+                  fontWeight: '500',
+                },
+                code: {
+                  color: '#FF6D3F',
+                  backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                  borderRadius: '0.25rem',
+                  padding: '0.125rem 0.375rem',
+                },
+                'code::before': {
+                  content: '""',
+                },
+                'code::after': {
+                  content: '""',
+                },
+                pre: {
+                  backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                  borderWidth: '1px',
+                  borderColor: '#374151',
+                  borderRadius: '0.5rem',
+                },
+                blockquote: {
+                  borderLeftColor: '#D34516',
+                  backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                  borderRadius: '0 0.375rem 0.375rem 0',
+                },
+                strong: {
+                  color: '#ffffff',
+                  fontWeight: '600',
+                },
+                img: {
+                  borderRadius: '0.5rem',
+                  borderWidth: '1px',
+                  borderColor: '#374151',
+                },
+                table: {
+                  width: '100%',
+                },
+                thead: {
+                  backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                },
+                th: {
+                  color: '#ffffff',
+                },
+              }
+            }
+          },
+        }
+      },
+      plugins: [
+        function ({ addComponents, addUtilities }) {
+          // Aspect Ratio
+          const aspectRatioUtilities = {
+            '.aspect-w-16': {
+              aspectRatio: '16/9',
+            },
+            '.aspect-h-10': {
+              aspectRatio: '16/10',
+            },
+            '.aspect-w-4': {
+              aspectRatio: '4/3',
+            },
+            '.aspect-h-3': {
+              aspectRatio: '4/3',
+            },
+            '.aspect-square': {
+              aspectRatio: '1/1',
+            },
+          };
+          addUtilities(aspectRatioUtilities);
+        }
+      ]
+    }
+  </script>
+  <link rel="icon" type="image/x-icon" href="{{ 'favicon.ico' | relative_url }}">
+  {% seo %}
+  <!--[if lt IE 9]>
+  <script src="/js/html5shiv.min.js"></script>
+  <script src="/js/respond.min.js"></script>
+  <![endif]-->
+</head>

@@ -1,0 +1,9 @@
+{% comment %}
+  Badge component
+  @param text - Badge text
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-rust/10 backdrop-blur-xl border border-rust/30 text-rust text-sm font-semibold shadow-lg shadow-rust/5 glow-sm-rust {{ include.classes }}">
+  {{ include.text }}
+</div> 

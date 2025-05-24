@@ -1,0 +1,12 @@
+{% comment %}
+  Copyright atom component
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<p class="text-gray-400 {{ include.classes }}">
+  &copy;&nbsp;{{ site.time | date: '%Y' }} under the terms of the 
+  <a href="{{ site.repository }}/blob/master/LICENSE" 
+     class="text-rust hover:text-rust-light transition-all duration-200 hover:underline decoration-rust/40">
+    MIT License
+  </a>
+</p> 

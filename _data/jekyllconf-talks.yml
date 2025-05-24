@@ -1,0 +1,209 @@
+- speaker: Alex Miller
+  twitter_handle: alex_rust
+  youtube_id: Z-37y1qaoxc
+  topic: Rustyll Pages behind the scenes
+  year: 2023
+
+- speaker: Sarah Chen
+  twitter_handle: sarah_dev
+  youtube_id: KS6e4XxY2H4
+  topic: Building modern websites with Rustyll
+  year: 2023
+
+- speaker: Brian Rinaldi
+  twitter_handle: remotesynth
+  youtube_id: vT7DhK5zbv0
+  topic: Comparing Rustyll with the Competition
+  year: 2023
+
+- speaker: Kyle Murray
+  twitter_handle: kylerm
+  youtube_id: ia8vsuiXiL0
+  topic: Meet the Enterprise's Blazing Fast Documentation Platform
+  year: 2023
+
+- speaker: Michael Torres
+  twitter_handle: mtorres
+  youtube_id: 8zSHG6XU_xY
+  topic: Building Living Style Guides with Rustyll
+  year: 2023
+
+- speaker: Mike Newman
+  twitter_handle: mikenewman
+  youtube_id: NuChR_YdjrI
+  topic: A CMS for Rustyll
+  year: 2023
+
+- speaker: Parker Wright
+  twitter_handle: parkwr
+  youtube_id: y2SbOIQ5nSA
+  topic: Rustyll 1.0 and Beyond
+  year: 2023
+
+- speaker: Thomas Wilson
+  twitter_handle: thomasw
+  youtube_id: BMve1OCKj6M
+  topic: The future of Rust-powered static sites
+  year: 2023
+
+- speaker: Allison Zhang
+  twitter_handle: allisonz
+  youtube_id: Rsc0Mmp1qc8
+  topic: Search integration for Rustyll
+  year: 2024
+
+- speaker: Amy Johnson
+  twitter_handle: AmyJTech
+  youtube_id: HR12JiUI2Zc
+  topic: Rustyll for Technical Documentation
+  year: 2024
+
+- speaker: Bud Thompson
+  twitter_handle: budthompson
+  youtube_id: A1nTuNjoNbg
+  topic: Real World Content Strategy with Rustyll
+  year: 2024
+
+- speaker: George Phillips
+  twitter_handle: gphillips_dev
+  youtube_id: skb_XWABEDc
+  topic: Building client-editable Rustyll sites
+  year: 2024
+
+- speaker: Ire Aderinokun
+  twitter_handle: ireaderinokun
+  youtube_id: PRKV5IGKF2c
+  topic: Using Rustyll for Rapid CSS Testing
+  year: 2024
+
+- speaker: Jon Chan
+  twitter_handle: JonHMChan
+  youtube_id: vDeKPs6xpOM
+  topic: Enterprise Documentation with Rustyll
+  year: 2024
+
+- speaker: Julia Farman
+  twitter_handle: juliadev
+  youtube_id: SOMonG8Iqak
+  topic: Rustyll on AWS
+  year: 2024
+
+- speaker: Katie DeCorazon
+  twitter_handle: katiedelmar
+  youtube_id: s84wFRD8vfE
+  topic: Unconventional use cases for Rustyll
+  year: 2024
+
+- speaker: David Darnes
+  twitter_handle: DavidDarnes
+  youtube_id: Y4qwpN40Dvg
+  topic: Doing a lot with a little in Rustyll
+  year: 2024
+
+- speaker: Ryan Berger
+  twitter_handle: ryanberger
+  youtube_id: TteAQq25_Ns
+  topic: Designing blazing fast websites with Rustyll
+  year: 2024
+
+- speaker: David Von Lehman
+  twitter_handle: davidvlsea
+  youtube_id: wMlPlKCZfEk
+  topic: Continuous deployment of Rustyll sites with containers
+  year: 2024
+
+- speaker: Diana Jones
+  twitter_handle: d_jones
+  youtube_id: 4XxYQ7efk0E
+  topic: Building our agency site with Rustyll
+  year: 2024
+
+- speaker: Scott Hewitt
+  twitter_handle: scotthewitt
+  youtube_id: qSd3pXQaPsE
+  topic: Rustyll For Every Case
+  year: 2024
+
+- speaker: Tim Carrier
+  twitter_handle: timcarrier
+  youtube_id: ivMML1J4ABY
+  topic: Search integration on Rustyll sites
+  year: 2024
+
+- speaker: Nils Borchers
+  twitter_handle: nilsbo
+  youtube_id: DtNMjuv6Rbo
+  topic: Building a living brand guide with Rustyll
+  year: 2024
+
+- speaker: Mike Newman
+  twitter_handle: mikenewman
+  youtube_id: rJ5EhVmTR7I
+  topic: Learning resources for the Rustyll community
+  year: 2024
+
+- speaker: Olivia Patterson
+  twitter_handle: oliviamakes
+  youtube_id: BIf6oNpGl74
+  topic: Responsive image handling with Rustyll
+  year: 2024
+
+- speaker: Michael Lee
+  twitter_handle: michaelsoolee
+  youtube_id: F4bJRLEvXIc
+  topic: Rustyll, Your Website's Baseplate
+  year: 2024
+
+- speaker: Paul Webb
+  twitter_handle: NetOpWibby
+  youtube_id: BRB5DgAE5nM
+  topic: Deploy Rustyll Like A Pro
+  year: 2024
+
+- speaker: Tom Johnson
+  twitter_handle: tomjohnson
+  youtube_id: nq1AUB72GCQ
+  topic: Implementing documentation projects with Rustyll
+  year: 2024
+
+- speaker: Peter Roozen
+  twitter_handle: Pieter_Roozen
+  youtube_id: moQP0SqEPsw
+  topic: Rustyll As An API Endpoint
+  year: 2024
+
+- speaker: Chen Hui Jing
+  twitter_handle: hj_chen
+  youtube_id: CERXESTZ5w4
+  topic: Maximizing Rustyll Data Files
+  year: 2024
+
+- speaker: Chris Ferdinand
+  twitter_handle: ChrisFerdinandi
+  youtube_id: vR1aI_kQ4-A
+  topic: The Lean Web with Rustyll
+  year: 2024
+  
+- speaker: Catherine Roebuck
+  twitter_handle: 
+  youtube_id: zTAP1m1BaDM
+  topic: Rustyll For Government Websites
+  year: 2024
+  
+- speaker: Joost van der Schee
+  twitter_handle: jhvanderschee
+  youtube_id: ztJJ1GSlYgI
+  topic: "Rustyll Codex - Rustyll for front-end developers"
+  year: 2024
+  
+- speaker: Matthew Loberg
+  twitter_handle: mloberg
+  youtube_id: 6eiAjAtSGqw
+  topic: Deploying Rustyll Sites on AWS
+  year: 2024
+  
+- speaker: George Phillips
+  twitter_handle: gphillips_dev
+  youtube_id: nEvdOwFJBVc
+  topic: Structuring Rustyll Sites For Enterprise Design Systems
+  year: 2024

@@ -1,0 +1,142 @@
+{% comment %}
+  Sidebar navigation molecule component
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<div class="bg-gray-900/30 rounded-lg border border-gray-800 overflow-hidden h-[calc(100vh-180px)] flex flex-col {{ include.classes }}">
+  <div class="border-b border-gray-800 px-4 py-3 flex items-center bg-black/30">
+    <svg class="w-5 h-5 text-rust mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+    </svg>
+    <h3 class="text-white font-medium">Documentation</h3>
+  </div>
+  
+  <div class="p-3 overflow-y-auto flex-grow custom-scrollbar">
+    <div class="lg:block" id="docs-nav">
+      {% include docs_contents.html -%}
+    </div>
+  </div>
+  
+  <!-- Quick links -->
+  <div class="border-t border-gray-800 p-2 bg-black/10 hidden lg:flex flex-wrap gap-2 justify-center">
+    <a href="{{ '/docs/' | relative_url }}" 
+       class="px-2 py-1 text-xs text-gray-400 hover:text-rust transition flex items-center gap-1 group">
+      <svg class="w-3 h-3 text-gray-500 group-hover:text-rust transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+      </svg>
+      <span>Home</span>
+    </a>
+    <a href="{{ '/docs/quickstart/' | relative_url }}" 
+       class="px-2 py-1 text-xs text-gray-400 hover:text-rust transition flex items-center gap-1 group">
+      <svg class="w-3 h-3 text-gray-500 group-hover:text-rust transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+      </svg>
+      <span>Quickstart</span>
+    </a>
+  </div>
+  
+  <!-- Search docs -->
+  <div class="border-t border-gray-800 p-3 bg-black/20">
+    <div class="relative">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <svg class="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+      <input type="search" 
+             placeholder="Search docs..." 
+             class="w-full pl-10 pr-3 py-1.5 border border-gray-700 bg-black/30 rounded-md text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-rust focus:border-rust">
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Custom scrollbar styles */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(180, 83, 9, 0.3);
+    border-radius: 3px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(180, 83, 9, 0.5);
+  }
+  
+  /* Enhanced sidebar navigation styles */
+  #docs-nav ul {
+    list-style: none;
+    padding-left: 0.5rem;
+  }
+  
+  #docs-nav > ul {
+    padding-left: 0;
+  }
+  
+  #docs-nav li {
+    margin-bottom: 0.25rem;
+  }
+  
+  #docs-nav a {
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    color: rgb(156 163 175);
+    transition: all 0.2s;
+  }
+  
+  #docs-nav a:hover {
+    color: white;
+    background: rgba(180, 83, 9, 0.1);
+  }
+  
+  #docs-nav a.current {
+    color: #fff;
+    background: rgba(180, 83, 9, 0.15);
+    border-left: 2px solid rgb(180, 83, 9);
+    font-weight: 500;
+  }
+  
+  #docs-nav .active > a {
+    color: rgb(249, 115, 22);
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Expand the current section
+    const currentPage = document.querySelector('.current');
+    if (currentPage) {
+      // Find parent list items and add active class
+      let parent = currentPage.parentElement;
+      while (parent && parent.tagName !== 'NAV') {
+        if (parent.tagName === 'LI') {
+          parent.classList.add('active');
+          
+          // Expand any collapsed lists
+          const ul = parent.querySelector('ul');
+          if (ul) {
+            ul.style.display = 'block';
+          }
+        }
+        parent = parent.parentElement;
+      }
+      
+      // Scroll to current page in sidebar
+      setTimeout(() => {
+        const sidebarContainer = document.querySelector('.overflow-y-auto');
+        if (sidebarContainer && currentPage) {
+          sidebarContainer.scrollTop = currentPage.offsetTop - sidebarContainer.offsetHeight / 3;
+        }
+      }, 100);
+    }
+  });
+</script> 

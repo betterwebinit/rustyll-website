@@ -1,0 +1,14 @@
+{% comment %}
+  Section title component
+  @param title - Title text
+  @param highlight - Text to highlight within title
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight leading-tight {{ include.classes }}">
+  {% if include.highlight %}
+    {{ include.title | replace: include.highlight, '<span class="text-transparent bg-clip-text bg-gradient-to-r from-rust-dark via-rust to-rust-light">' | append: include.highlight | append: '</span>' }}
+  {% else %}
+    {{ include.title }}
+  {% endif %}
+</h2> 

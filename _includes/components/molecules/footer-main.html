@@ -1,0 +1,42 @@
+{% comment %}
+  Main footer info molecule component
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<div class="relative {{ include.classes }}">
+  <!-- Logo with glow effect -->
+  <div class="mb-4">
+    {% include components/atoms/logo.html show_text=false classes="mb-4" %}
+    <div class="absolute -top-6 -left-6 w-32 h-32 bg-rust/10 rounded-full blur-3xl"></div>
+  </div>
+  
+  <!-- Team info -->
+  <p class="text-gray-400 mb-3 text-lg">
+    Rustyll is lovingly maintained by the 
+    <a href="{{ '/team/' | relative_url }}" 
+       class="text-rust hover:text-rust-light transition-all duration-200 hover:underline decoration-rust/40 relative inline-flex group">
+      core team
+      <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-rust/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-bottom-left"></span>
+    </a> 
+    of volunteers.
+  </p>
+  
+  <!-- Copyright -->
+  {% include components/atoms/copyright.html classes="text-sm mb-6" %}
+  
+  <!-- Newsletter signup -->
+  <div class="mt-6 relative overflow-hidden rounded-xl border border-rust/20 p-5 bg-black/20 backdrop-blur-sm hover:bg-black/30 transition-all duration-300">
+    <div class="absolute -top-10 -right-10 w-40 h-40 bg-rust/5 rounded-full blur-3xl"></div>
+    <h3 class="text-white font-medium mb-2">Stay updated</h3>
+    <p class="text-gray-400 text-sm mb-4">Join our newsletter for the latest Rustyll updates</p>
+    <form class="flex flex-col sm:flex-row gap-2">
+      <input type="email" 
+             placeholder="Your email address" 
+             class="flex-grow bg-black/30 border border-gray-700 rounded-md text-sm text-white placeholder-gray-400 focus:outline-none focus:border-rust focus:ring-1 focus:ring-rust px-3 py-2">
+      <button type="submit" 
+              class="bg-rust hover:bg-rust-light text-white rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 transform hover:translate-y-[-2px]">
+        Subscribe
+      </button>
+    </form>
+  </div>
+</div> 

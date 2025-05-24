@@ -1,0 +1,45 @@
+{% comment %}
+  Nav item atom component
+  @param title - Item title
+  @param link - Item URL
+  @param active - Whether the item is active
+  @param variant - desktop or mobile (default: desktop)
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+{% assign variant = include.variant | default: "desktop" %}
+{% if variant == "desktop" %}
+  <a 
+    href="{{ include.link | relative_url }}"
+    class="relative text-gray-300 hover:text-white font-medium transition-all duration-300 
+           {% if include.active %}
+             text-white font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-rust after:scale-100 after:origin-bottom-left after:transition-transform after:duration-300
+           {% else %}
+             after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-rust after:scale-0 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-100 hover:after:origin-bottom-left
+           {% endif %}
+           px-3 py-2 flex items-center space-x-1.5 {{ include.classes }}"
+  >
+    {% if include.icon %}
+      <span class="text-rust transform transition-transform duration-300 {% if include.active %}scale-110{% endif %}">{{ include.icon }}</span>
+    {% endif %}
+    <span>{{ include.title }}</span>
+  </a>
+{% else %}
+  <a 
+    href="{{ include.link | relative_url }}" 
+    class="block px-4 py-2 rounded-md transition-all duration-300 relative overflow-hidden
+           {% if include.active %}
+             text-white font-bold before:absolute before:inset-0 before:bg-rust/20 before:scale-100 before:animate-pulse before:animate-duration-[3000ms]
+           {% else %}
+             text-gray-300 hover:text-white before:absolute before:inset-0 before:bg-rust/10 before:scale-0 before:transition-transform before:duration-300 hover:before:scale-100
+           {% endif %}
+           {{ include.classes }}"
+  >
+    <div class="flex items-center relative z-10">
+      {% if include.icon %}
+        <span class="mr-2 text-rust transition-all duration-300 {% if include.active %}scale-110{% endif %}">{{ include.icon }}</span>
+      {% endif %}
+      {{ include.title }}
+    </div>
+  </a>
+{% endif %} 

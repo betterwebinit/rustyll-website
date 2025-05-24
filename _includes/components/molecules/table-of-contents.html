@@ -1,0 +1,128 @@
+{% comment %}
+  Table of contents molecule component
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<div class="bg-gray-900/30 rounded-lg border border-gray-800 overflow-hidden sticky top-24 {{ include.classes }}">
+  <div class="border-b border-gray-800 px-4 py-2.5 flex items-center bg-black/30">
+    <svg class="w-4 h-4 text-rust mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
+    </svg>
+    <h3 class="text-white font-medium text-sm">On this page</h3>
+  </div>
+  
+  <div class="px-3 py-3 max-h-[calc(100vh-260px)] overflow-y-auto custom-scrollbar" id="table-of-contents">
+    {% assign headers = content | split: '<h2' %}
+    {% if headers.size > 1 %}
+      <ul class="space-y-1 text-sm pr-2">
+        {% for header in headers %}
+          {% if forloop.first %}
+            {% continue %}
+          {% endif %}
+          
+          {% assign header_content = header | split: '</h2>' %}
+          {% assign header_text = header_content[0] | split: '>' | last | strip_html | strip %}
+          {% assign header_id = header_text | slugify %}
+          
+          <li>
+            <a href="#{{ header_id }}" class="text-gray-400 hover:text-rust transition-colors duration-200 block px-2 py-1 hover:bg-black/20 rounded font-medium">
+              {% if header_text.size > 38 %}
+                {{ header_text | truncate: 35 }}...
+              {% else %}
+                {{ header_text }}
+              {% endif %}
+            </a>
+          </li>
+          
+          {% assign subheaders = header_content[0] | split: '<h3' %}
+          {% if subheaders.size > 1 %}
+            <ul class="ml-3 space-y-1">
+              {% for subheader in subheaders %}
+                {% if forloop.first %}
+                  {% continue %}
+                {% endif %}
+                
+                {% assign subheader_content = subheader | split: '</h3>' %}
+                {% assign subheader_text = subheader_content[0] | split: '>' | last | strip_html | strip %}
+                {% assign subheader_id = subheader_text | slugify %}
+                
+                <li>
+                  <a href="#{{ subheader_id }}" class="text-gray-400 hover:text-rust transition-colors duration-200 block px-2 py-1 hover:bg-black/20 rounded text-xs">
+                    {% if subheader_text.size > 38 %}
+                      {{ subheader_text | truncate: 35 }}...
+                    {% else %}
+                      {{ subheader_text }}
+                    {% endif %}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="text-sm text-gray-500 italic">No sections found</div>
+    {% endif %}
+  </div>
+  
+  <style>
+    /* Active TOC item styles */
+    #table-of-contents .active-link {
+      color: rgb(249, 115, 22) !important;
+      font-weight: 500;
+      transform: translateX(3px);
+    }
+    
+    #table-of-contents a {
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    
+    #table-of-contents .active-link::before {
+      content: "";
+      position: absolute;
+      left: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 5px;
+      width: 5px;
+      border-radius: 50%;
+      background-color: rgb(249, 115, 22);
+    }
+  </style>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const tocLinks = document.querySelectorAll('#table-of-contents a');
+      
+      // Add click handler for smooth scrolling
+      tocLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
+      
+      // Highlight current section on scroll
+      window.addEventListener('scroll', function() {
+        const scrollPos = window.scrollY;
+        
+        tocLinks.forEach(link => {
+          const targetId = link.getAttribute('href').substring(1);
+          const targetElement = document.getElementById(targetId);
+          
+          if (targetElement) {
+            const rect = targetElement.getBoundingClientRect();
+            
+            if (rect.top <= 100 && rect.bottom >= 100) {
+              tocLinks.forEach(l => l.classList.remove('active-link'));
+              link.classList.add('active-link');
+            }
+          }
+        });
+      });
+    });
+  </script>
+</div> 

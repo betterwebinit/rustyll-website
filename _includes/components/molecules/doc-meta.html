@@ -1,0 +1,45 @@
+{% comment %}
+  Doc meta molecule component
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 py-3 mb-2 {{ include.classes }}">
+  <!-- Badge for docs type -->
+  <div class="flex items-center gap-2">
+    <span class="px-2 py-0.5 bg-rust/10 rounded-full text-rust text-xs border border-rust/30 whitespace-nowrap">
+      {% if page.category %}
+        {{ page.category }}
+      {% else %}
+        Documentation
+      {% endif %}
+    </span>
+    
+    <!-- Reading time estimation -->
+    <div class="flex items-center text-xs text-gray-400">
+      <svg class="w-3.5 h-3.5 mr-1 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      {% assign words = content | number_of_words %}
+      {% if words < 360 %}
+        <span>1 min read</span>
+      {% else %}
+        <span>{{ words | divided_by:180 }} min read</span>
+      {% endif %}
+    </div>
+  </div>
+  
+  <div class="flex items-center gap-4">
+    <!-- Last updated date -->
+    <div class="flex items-center text-xs text-gray-400">
+      <svg class="w-3.5 h-3.5 mr-1 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+      </svg>
+      <span>Updated: {{ page.last_modified_at | default: site.time | date: "%b %d, %Y" }}</span>
+    </div>
+    
+    <!-- Improve doc link -->
+    <div>
+      {% include components/atoms/improve-doc-button.html %}
+    </div>
+  </div>
+</div> 

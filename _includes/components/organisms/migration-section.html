@@ -1,0 +1,47 @@
+{% comment %}
+  Migration section component
+{% endcomment %}
+
+<section class="relative py-24 transition-section" id="section-migration">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+    <div class="text-center mb-16">
+      {% include components/atoms/badge.html text="Universal Migration" classes="animate-float" %}
+      
+      {% include components/atoms/section-title.html 
+        title="Seamless migration from any platform" 
+        highlight="Seamless migration" 
+        classes="lg:text-5xl" %}
+      
+      <p class="text-lg text-white/90 max-w-3xl mx-auto leading-relaxed">
+        Our next-generation migration tools make it effortless to bring your existing content to Rustyll.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 lg:gap-6">
+      <!-- Generator for all the cards -->
+      {% assign engines = "Jekyll:Ruby-based,Hugo:Go-based,Gatsby:React-based,11ty:JavaScript,Zola:Rust-based,MdBook:Rust-based,GitBook:JavaScript,MkDocs:Python-based,Docsy:Hugo theme,Slate:API docs,Bridgetown:Ruby/JS,Others:10+ more" | split: "," %}
+
+      {% for engine_info in engines %}
+        {% assign engine_data = engine_info | split: ":" %}
+        {% assign engine_name = engine_data[0] %}
+        {% assign engine_desc = engine_data[1] %}
+        {% assign animation_delay = forloop.index | times: 50 %}
+
+        {% include components/molecules/migration-card.html
+          name=engine_name
+          description=engine_desc
+          delay=animation_delay %}
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-16">
+      <a href="{{ '/docs/migrate/' | relative_url }}" class="inline-flex items-center px-8 py-4 rounded-xl bg-black/60 backdrop-blur-xl border border-rust/20 text-white hover:bg-black/80 transition-all duration-300 font-medium transform hover:translate-y-[-2px] shadow-lg shadow-rust/10 hover:shadow-rust/30 group overflow-hidden relative">
+        <span class="relative z-10">Explore migration options</span>
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-rust/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+        <svg class="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300 relative z-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section> 

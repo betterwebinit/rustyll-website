@@ -1,0 +1,13 @@
+{% comment %}
+  Tutorial author atom component
+  @param author - The author's GitHub username
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<a href="https://github.com/{{ include.author | default: page.author }}" 
+   class="flex items-center group transition-colors duration-200 {{ include.classes }}">
+  {% avatar user=include.author | default: page.author size=20 %}
+  <span class="ml-2 text-gray-400 group-hover:text-rust transition-colors duration-200">
+    {{ include.author | default: page.author }}
+  </span>
+</a> 

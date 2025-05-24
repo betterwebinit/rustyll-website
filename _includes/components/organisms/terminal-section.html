@@ -1,0 +1,40 @@
+{% comment %}
+  Terminal section component
+{% endcomment %}
+
+<section id="get-started" class="relative py-24 transition-section">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-16 md:gap-x-16 items-center">
+      <div class="text-center md:text-left" data-aos="fade-right">
+        {% include components/atoms/badge.html text="Quantum-Speed Setup" %}
+        
+        {% include components/atoms/section-title.html 
+          title="Get up and running in milliseconds" 
+          highlight="in milliseconds" %}
+        
+        <p class="text-white/90 text-lg max-w-lg mx-auto md:mx-0 mb-8 leading-relaxed">
+          Engineered for speed with a seamless installation process and an intuitive development experience.
+        </p>
+        <div class="flex flex-wrap gap-4 md:justify-start justify-center">
+          <a href="/docs/installation" class="px-6 py-3 rounded-xl bg-black/60 backdrop-blur-xl border border-rust/20 text-white hover:bg-black/80 hover:border-rust/40 transition-all duration-300 font-medium transform hover:translate-y-[-2px] shadow-lg shadow-rust/5 hover:shadow-rust/20 group">
+            <span class="relative inline-flex items-center">
+              <span class="absolute w-2 h-2 rounded-full bg-rust/80 left-0 -ml-4 group-hover:animate-ping"></span>
+              Installation Guide
+              <svg class="w-4 h-4 ml-2 transition-transform duration-200 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      {% assign terminal_commands = "cargo install rustyll, rustyll new my-awesome-site, cd my-awesome-site, rustyll serve" | split: ", " %}
+      {% assign terminal_outputs = "," | split: "," | push: "," | push: "," | push: "# => Site running at http://localhost:4000" %}
+      
+      {% include components/molecules/terminal.html 
+        title="Rustyll Installation"
+        commands=terminal_commands
+        outputs=terminal_outputs %}
+    </div>
+  </div>
+</section> 

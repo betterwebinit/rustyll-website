@@ -1,0 +1,28 @@
+{% comment %}
+  Tutorial header molecule component
+  @param title - The tutorial title
+  @param author - The tutorial author
+  @param date - The tutorial date
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<header class="mb-8 {{ include.classes }}">
+  <div class="mb-4 flex justify-end">
+    {% include components/atoms/improve-doc-button.html %}
+  </div>
+  
+  <h1 class="text-3xl md:text-4xl font-bold mb-4 text-white relative group">
+    <span class="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-gray-300">
+      {{ include.title | default: page.title }}
+    </span>
+    <div class="mt-2 w-24 h-1 bg-gradient-to-r from-rust to-transparent rounded-full group-hover:w-32 transition-all duration-300"></div>
+  </h1>
+  
+  {% assign author = include.author | default: page.author %}
+  {% if author %}
+    <div class="flex flex-wrap gap-4 items-center text-sm">
+      {% include components/atoms/tutorial-date.html date=include.date %}
+      {% include components/atoms/tutorial-author.html author=author %}
+    </div>
+  {% endif %}
+</header> 

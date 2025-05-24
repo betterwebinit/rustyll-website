@@ -1,0 +1,24 @@
+{% comment %}
+  Button component
+  @param text - Button text
+  @param url - Button URL
+  @param variant - primary, secondary (default: primary)
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+{% assign variant = include.variant | default: "primary" %}
+{% assign classes = include.classes | default: "" %}
+
+{% if variant == "primary" %}
+  <a href="{{ include.url }}" 
+     class="px-8 py-4 rounded-xl bg-rust text-white hover:bg-rust-light transition-all duration-300 shadow-xl shadow-rust/20 hover:shadow-rust/50 font-medium transform hover:translate-y-[-3px] hover:scale-[1.03] relative overflow-hidden group {{ classes }}">
+    <span class="relative z-10">{{ include.text }}</span>
+    <div class="absolute inset-0 bg-gradient-to-r from-rust to-rust-light opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+  </a>
+{% elsif variant == "secondary" %}
+  <a href="{{ include.url }}" 
+     class="px-8 py-4 rounded-xl bg-black/50 backdrop-blur-xl border border-white/10 text-white hover:bg-black/70 hover:border-rust/20 transition-all duration-300 font-medium transform hover:translate-y-[-3px] shadow-lg hover:shadow-rust/10 relative overflow-hidden {{ classes }}">
+    <span class="relative z-10">{{ include.text }}</span>
+    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-rust/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+  </a>
+{% endif %} 

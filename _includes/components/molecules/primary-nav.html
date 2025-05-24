@@ -1,0 +1,35 @@
+{% comment %}
+  Primary navigation molecule component
+  @param current_url - Current page URL
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<ul class="flex items-center gap-1 sm:gap-2 md:gap-4 lg:gap-6 {{ include.classes }}">
+  {% for item in site.data.primary_nav %}
+    <li class="relative group">
+      {% assign is_active = false %}
+      {% if item.link == '/' %}
+        {% if page.url == item.link %}
+          {% assign is_active = true %}
+        {% endif %}
+      {% else %}
+        {% if page.url contains item.link %}
+          {% assign is_active = true %}
+        {% endif %}
+      {% endif %}
+      
+      {% include components/atoms/nav-item.html
+        title=item.title
+        link=item.link
+        active=is_active
+      %}
+      
+      {% if is_active %}
+        <div class="absolute -top-1 -right-1 flex space-x-0.5">
+          <span class="h-1.5 w-1.5 rounded-full bg-rust animate-ping"></span>
+          <span class="h-1.5 w-1.5 rounded-full bg-rust animate-pulse"></span>
+        </div>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul> 

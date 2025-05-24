@@ -1,0 +1,13 @@
+{% comment %}
+  News category badge atom component
+  @param category - The category name
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rust/10 text-rust border border-rust/30 transition-colors duration-200 hover:bg-rust/20 {{ include.classes }}">
+  {% if include.category %}
+    {{ include.category }}
+  {% else %}
+    {{ page.categories | array_to_sentence_string }}
+  {% endif %}
+</span> 

@@ -1,0 +1,36 @@
+{% comment %}
+  Doc navigation molecule component
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<div class="flex items-center justify-between space-x-4 pt-6 mt-12 border-t border-gray-800 {{ include.classes }}">
+  {% if page.previous_page %}
+    <a href="{{ page.previous_page | relative_url }}" 
+       class="flex items-center space-x-2 text-gray-400 hover:text-rust transition-colors duration-200 group bg-black/20 px-4 py-2 rounded-lg border border-gray-800 hover:border-rust/30">
+      <svg class="w-5 h-5 transform transition-transform duration-200 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      <div class="flex flex-col">
+        <span class="text-xs uppercase">Previous</span>
+        <span class="text-sm font-medium">{{ page.previous_page_title | default: "Previous Page" }}</span>
+      </div>
+    </a>
+  {% else %}
+    <div></div>
+  {% endif %}
+  
+  {% if page.next_page %}
+    <a href="{{ page.next_page | relative_url }}" 
+       class="flex items-center space-x-2 text-gray-400 hover:text-rust transition-colors duration-200 group bg-black/20 px-4 py-2 rounded-lg border border-gray-800 hover:border-rust/30 ml-auto">
+      <div class="flex flex-col items-end">
+        <span class="text-xs uppercase">Next</span>
+        <span class="text-sm font-medium">{{ page.next_page_title | default: "Next Page" }}</span>
+      </div>
+      <svg class="w-5 h-5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+      </svg>
+    </a>
+  {% else %}
+    <div></div>
+  {% endif %}
+</div> 

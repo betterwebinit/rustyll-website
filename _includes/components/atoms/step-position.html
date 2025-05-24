@@ -1,0 +1,12 @@
+{% comment %}
+  Step position atom component
+  @param position - The step number
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<div class="flex items-center {{ include.classes }}">
+  <div class="flex items-center justify-center bg-rust/20 text-rust font-bold rounded-full w-8 h-8 mr-3 border border-rust/30">
+    {{ include.position | default: page.position }}
+  </div>
+  <span class="text-gray-300">Step</span>
+</div> 

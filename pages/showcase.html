@@ -1,0 +1,33 @@
+---
+layout: page
+title: Showcase
+permalink: /showcase/
+redirect_from:
+  - /docs/sites/
+---
+
+<div class="mb-8">
+  <p class="text-lg text-gray-300">Rustyll powers many company websites; here are a few notable examples:</p>
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+  {% for entry in site.data.showcase reversed -%}
+  <div class="bg-black/20 rounded-lg overflow-hidden border border-gray-800 hover:border-rust/30 hover:shadow-md transition group">
+    <a href="{{ entry.url }}" target="_blank" rel="noopener" class="block h-full">
+      <div class="aspect-w-16 aspect-h-10 overflow-hidden">
+        <img 
+          loading="lazy" 
+          src="{{ site.cloudinary_url }}/showcase/{{ entry.image }}" 
+          alt="{{ entry.name }}" 
+          width="404" 
+          height="253"
+          class="w-full h-full object-cover transform group-hover:scale-105 transition duration-300"
+        >
+      </div>
+      <div class="p-4">
+        <h3 class="text-lg font-medium text-white group-hover:text-rust transition">{{ entry.name }}</h3>
+      </div>
+    </a>
+  </div>
+  {% endfor -%}
+</div>

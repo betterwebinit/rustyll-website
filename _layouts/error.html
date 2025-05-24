@@ -1,0 +1,25 @@
+{% include top.html %}
+
+<body class="bg-blackish text-gray-100 font-sans min-h-screen flex flex-col">
+  <header class="py-10">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-center">
+        <h1>
+          <a href="/" class="inline-block">
+            <span class="sr-only">Rustyll</span>
+            <img src="/img/logo-2x.png" width="200" height="auto" alt="Rustyll Logo" class="h-24 w-auto">
+          </a>
+        </h1>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow container mx-auto px-4 py-8">
+    {{ content }}
+  </main>
+
+  {% include anchor_links.html %}
+  {% include analytics.html %}
+
+</body>
+</html>

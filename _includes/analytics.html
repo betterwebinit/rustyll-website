@@ -1,0 +1,57 @@
+{% if site.google_analytics_id -%}
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics_id }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '{{ site.google_analytics_id }}');
+  </script>
+  
+  <!-- Cookie consent banner -->
+  <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 border-t border-rust/20 shadow-lg z-50 transform translate-y-full transition-transform duration-300 ease-in-out">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-sm text-gray-300">
+        This site uses cookies to analyze traffic and enhance your experience. By continuing to use this site, you agree to our use of cookies.
+      </div>
+      <div class="flex gap-3">
+        <button id="accept-cookies" class="px-4 py-2 bg-rust hover:bg-rust-dark text-white rounded-md text-sm font-medium transition-colors">
+          Accept
+        </button>
+        <button id="decline-cookies" class="px-4 py-2 bg-black hover:bg-gray-800 text-white border border-gray-700 rounded-md text-sm font-medium transition-colors">
+          Decline
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if user already made cookie choice
+      const cookieChoice = localStorage.getItem('cookieConsent');
+      
+      if (cookieChoice === null) {
+        // Show banner if no choice was made yet
+        setTimeout(function() {
+          const banner = document.getElementById('cookie-banner');
+          banner.classList.remove('translate-y-full');
+        }, 1000);
+      }
+      
+      // Accept cookies
+      document.getElementById('accept-cookies').addEventListener('click', function() {
+        localStorage.setItem('cookieConsent', 'accepted');
+        document.getElementById('cookie-banner').classList.add('translate-y-full');
+      });
+      
+      // Decline cookies
+      document.getElementById('decline-cookies').addEventListener('click', function() {
+        localStorage.setItem('cookieConsent', 'declined');
+        document.getElementById('cookie-banner').classList.add('translate-y-full');
+        // Disable GA tracking
+        window['ga-disable-{{ site.google_analytics_id }}'] = true;
+      });
+    });
+  </script>
+{% endif -%}

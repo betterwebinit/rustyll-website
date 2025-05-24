@@ -1,0 +1,25 @@
+{% comment %}
+  Tutorial content molecule component
+  @param content - The tutorial content
+  @param show_disclaimer - Whether to show the plugin disclaimer
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<div class="relative bg-black/10 rounded-xl p-5 md:p-7 border border-gray-800 shadow-lg hover:shadow-rust/5 transition-shadow duration-300 {{ include.classes }}">
+  <div class="absolute -top-10 -right-10 w-40 h-40 bg-rust/5 rounded-full blur-3xl"></div>
+  
+  <!-- Main content -->
+  <article class="prose prose-invert prose-lg prose-headings:text-white prose-headings:font-medium prose-h2:text-2xl prose-h2:mt-8 prose-h3:text-xl prose-h4:text-lg prose-a:text-rust prose-a:decoration-rust/30 hover:prose-a:text-rust-light hover:prose-a:decoration-rust-light/50 prose-pre:bg-black/30 prose-pre:border prose-pre:border-gray-800 prose-pre:rounded-lg prose-pre:my-4 prose-pre:shadow-sm prose-code:text-rust-light prose-code:bg-black/30 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-img:rounded-lg prose-img:border prose-img:border-gray-800 prose-strong:text-white prose-li:marker:text-rust prose-table:border-collapse prose-table:border prose-table:border-gray-800 prose-td:border prose-td:border-gray-800 prose-td:p-2 prose-th:border prose-th:border-gray-800 prose-th:p-2 prose-th:bg-black/30 max-w-none">
+    {{ include.content }}
+  </article>
+  
+  <!-- Plugin disclaimer -->
+  {% if include.show_disclaimer or page.plugin_disclaimer %}
+    {% include components/atoms/plugin-disclaimer.html %}
+  {% endif %}
+  
+  <!-- Navigation between tutorials -->
+  <div class="mt-8 border-t border-gray-800 pt-6">
+    {% include section_nav_tutorials.html %}
+  </div>
+</div> 

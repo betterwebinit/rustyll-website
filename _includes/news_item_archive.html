@@ -1,0 +1,31 @@
+<article class="border-b border-gray-700/50 pb-6 mb-6 last:border-0" itemscope itemtype="http://schema.org/Article">
+  <div class="flex flex-col md:flex-row gap-4">
+    <div class="md:w-1/4">
+      <span class="inline-block bg-rust/10 text-rust px-2 py-1 rounded text-sm font-medium">
+        {{- post.categories | array_to_sentence_string -}}
+      </span>
+    </div>
+    <div class="md:w-3/4">
+      <div class="space-y-2">
+        <h2 class="text-xl font-bold text-white" itemprop="headline">
+          <a href="{{ post.url | relative_url }}" class="hover:text-rust transition-colors duration-200" itemprop="url">
+            {{- post.title -}}
+          </a>
+        </h2>
+        <div class="flex flex-wrap items-center gap-4 text-gray-400 text-sm">
+          <span class="flex items-center" itemprop="datePublished" content="{{ post.date | date: '%Y-%m-%d' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            {{- post.date | date_to_string -}}
+          </span>
+          {% assign author = post.author -%}
+          <a href="https://github.com/{{ author }}" class="flex items-center hover:text-rust transition" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            {% avatar user=author size=20 -%}
+            <span class="ml-2" itemprop="name">{{ author }}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

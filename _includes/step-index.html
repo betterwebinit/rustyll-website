@@ -1,0 +1,58 @@
+{% assign docs = site.docs | where_exp: "doc", "doc.url contains '/step-by-step/'" -%}
+
+{% for doc in docs -%}
+  {% if doc.url == page.url -%}
+    <div class="flex justify-between items-center mb-8">
+      <div>
+        {% if forloop.first -%}
+          <span class="inline-flex items-center px-4 py-2 border border-gray-700 rounded-md text-sm font-medium text-gray-400 bg-black/20 cursor-not-allowed">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back
+          </span>
+        {% else -%}
+          {% assign previous = forloop.index0 | minus: 1 -%}
+          <a href="{{ docs[previous].url }}" class="inline-flex items-center px-4 py-2 border border-gray-700 rounded-md text-sm font-medium text-white hover:bg-rust/10 hover:border-rust transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back
+          </a>
+        {% endif -%}
+      </div>
+      <div>
+      {% if forloop.last -%}
+        <span class="inline-flex items-center px-4 py-2 border border-gray-700 rounded-md text-sm font-medium text-gray-400 bg-black/20 cursor-not-allowed">
+          Next
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </span>
+      {% else -%}
+        {% assign next = forloop.index0 | plus: 1 -%}
+        <a href="{{ docs[next].url }}" class="inline-flex items-center px-4 py-2 border border-gray-700 rounded-md text-sm font-medium text-white hover:bg-rust/10 hover:border-rust transition">
+          Next
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      {% endif -%}
+      </div>
+    </div>
+    {% break -%}
+  {% endif -%}
+{% endfor -%}
+
+<div class="mt-8">
+  <h3 class="text-xl font-bold text-white mb-4">All Steps</h3>
+  <ol class="space-y-2 list-decimal list-inside">
+    {% for step in docs -%}
+    <li class="{% if step.url == page.url %}text-rust font-medium{% endif %}">
+      <a href="{{ step.url }}" class="{% if step.url != page.url %}text-gray-300 hover:text-rust transition-colors duration-200{% endif %}">
+        {{- step.title -}}
+      </a>
+    </li>
+    {% endfor -%}
+  </ol>
+</div>

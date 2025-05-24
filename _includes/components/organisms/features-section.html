@@ -1,0 +1,47 @@
+{% comment %}
+  Features section component
+{% endcomment %}
+
+<section class="relative py-24 transition-section" id="section-features" data-section-color="rgba(211, 69, 22, 0.25)" data-section-index="1">
+  <div class="section-wrapper">
+    <div class="absolute inset-0 radial-glow left-center"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-y-16 md:gap-x-12 lg:gap-x-20">
+        {% assign composition_icon = '<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M7 3v18" /><path d="M3 7h18" /></svg>' %}
+        {% assign composition_description = 'No more databases, comment moderation, or pesky updates to install—just <em>your content</em> elegantly transformed.' %}
+        {% assign usage_url = site.baseurl | append: '/docs/usage/' %}
+        
+        {% include components/molecules/feature-card.html 
+          title="Simple Composition"
+          description=composition_description
+          link_text="How Rustyll works"
+          link_url=usage_url
+          delay="0"
+          icon=composition_icon %}
+        
+        {% assign delivery_icon = '<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2H4" /><polyline points="14 2 14 8 20 8" /><path d="M10.5 12.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" /><path d="M10.5 16.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" /></svg>' %}
+        {% assign delivery_description = '<a href="https://daringfireball.net/projects/markdown/" class="text-rust hover:text-rust-light transition-colors duration-200 underline decoration-rust/40 hover:decoration-rust">Markdown</a>, <a href="https://github.com/Shopify/liquid/wiki" class="text-rust hover:text-rust-light transition-colors duration-200 underline decoration-rust/40 hover:decoration-rust">Liquid</a>, HTML &amp; CSS transform into fast, optimized static sites ready for deployment.' %}
+        {% assign templates_url = site.baseurl | append: '/docs/templates/' %}
+        
+        {% include components/molecules/feature-card.html 
+          title="Static Delivery"
+          description=delivery_description
+          link_text="Template architecture"
+          link_url=templates_url
+          delay="200"
+          icon=delivery_icon %}
+        
+        {% assign structure_icon = '<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z" /></svg>' %}
+        {% assign structure_description = 'Permalinks, categories, pages, posts, and custom layouts are all first-class citizens in your content ecosystem.' %}
+        
+        {% include components/molecules/feature-card.html 
+          title="Blog-aware Structure"
+          description=structure_description
+          link_text="Migrate your content"
+          link_url="https://import.jekyllrb.com"
+          delay="400"
+          icon=structure_icon %}
+      </div>
+    </div>
+  </div>
+</section> 

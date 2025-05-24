@@ -1,0 +1,32 @@
+{% comment %}
+  News header molecule component
+  @param title - The news title
+  @param url - The news URL
+  @param date - The news date
+  @param author - The news author
+  @param categories - The news categories
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<header class="mb-6 {{ include.classes }}">
+  <h1 class="text-3xl md:text-4xl font-bold mb-4 text-white flex items-center gap-2 group" itemprop="headline">
+    <span class="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-gray-300">
+      {{ include.title | default: page.title }}
+    </span>
+    {% include components/atoms/permalink.html url=include.url %}
+  </h1>
+  
+  <div class="flex flex-wrap gap-4 items-center">
+    <!-- Category badge -->
+    {% include components/atoms/news-category-badge.html category=include.categories %}
+    
+    <!-- Meta info -->
+    <div class="flex items-center gap-4 text-sm">
+      <!-- Date -->
+      {% include components/atoms/news-date.html date=include.date %}
+      
+      <!-- Author -->
+      {% include components/atoms/news-author.html author=include.author %}
+    </div>
+  </div>
+</header> 

@@ -1,0 +1,13 @@
+{% comment %}
+  Section divider atom component
+  @param classes - Additional CSS classes
+{% endcomment %}
+
+<div class="relative {{ include.classes }}">
+  <div class="absolute inset-0 flex items-center">
+    <div class="w-full border-t border-gray-800"></div>
+  </div>
+  <div class="relative flex justify-center">
+    <span class="bg-black px-2 text-sm text-gray-500">●</span>
+  </div>
+</div> 

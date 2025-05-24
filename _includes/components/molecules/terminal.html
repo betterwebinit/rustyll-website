@@ -1,0 +1,55 @@
+{% comment %}
+  Terminal component
+  @param commands - Array of terminal commands
+  @param outputs - Array of command outputs (optional)
+{% endcomment %}
+
+<div class="relative" data-aos="fade-left">
+  <!-- Terminal enhanced glow effect -->
+  <div class="absolute inset-0 bg-rust/30 rounded-2xl blur-2xl animate-pulse-slow"></div>
+
+  <div class="relative bg-black/90 rounded-2xl overflow-hidden border border-rust/20 shadow-2xl backdrop-blur-xl transform perspective-1000 rotate-y-[-2deg] hover:rotate-y-0 transition-transform duration-700">
+    <div class="bg-gradient-to-r from-black/95 to-black/90 px-4 py-3 border-b border-rust/20 flex items-center">
+      <div class="flex space-x-1.5 mr-4">
+        <div class="w-3 h-3 rounded-full bg-red-500 shadow-glow-sm-red"></div>
+        <div class="w-3 h-3 rounded-full bg-yellow-500 shadow-glow-sm-yellow"></div>
+        <div class="w-3 h-3 rounded-full bg-green-500 shadow-glow-sm-green"></div>
+      </div>
+      <div class="flex items-center">
+        <div class="w-1 h-4 bg-rust mr-2 animate-blink"></div>
+        <p class="text-gray-300 font-mono text-sm">{{ include.title | default: "Terminal" }}</p>
+      </div>
+      <div class="ml-auto flex items-center space-x-2">
+        <div class="w-2 h-2 rounded-full bg-rust animate-ping"></div>
+        <p class="text-gray-400 font-mono text-xs">Connected</p>
+      </div>
+    </div>
+    <div class="p-6 font-mono text-sm bg-gradient-to-br from-black/95 to-black/90">
+      {% for command in include.commands %}
+        <p class="pb-1 flex typing-animation" {% if forloop.index > 1 %}style="animation-delay: {{ forloop.index }}s"{% endif %}>
+          <span class="text-gray-500 flex-shrink-0">{% if forloop.index > 2 %}~/my-awesome-site{% else %}~{% endif %}</span>
+          <span class="text-rust mr-2">$</span>
+          <span class="text-gray-200">{{ command }}</span>
+        </p>
+        {% if include.outputs[forloop.index0] %}
+          <p class="text-green-400 typing-animation" style="animation-delay: {{ forloop.index | plus: 1 }}s">
+            {{ include.outputs[forloop.index0] }}
+          </p>
+        {% endif %}
+      {% endfor %}
+      <div class="flex items-center mt-1 cursor-typing">
+        <span class="text-gray-500 flex-shrink-0">{% if include.commands.size > 2 %}~/my-awesome-site{% else %}~{% endif %}</span>
+        <span class="text-rust mr-2">$</span>
+        <span class="w-3 h-5 bg-gray-300 animate-pulse"></span>
+      </div>
+    </div>
+
+    <!-- Holographic effect -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute inset-y-0 left-0 w-[1px] bg-gradient-to-b from-transparent via-rust/30 to-transparent"></div>
+      <div class="absolute inset-y-0 right-0 w-[1px] bg-gradient-to-b from-transparent via-rust/30 to-transparent"></div>
+      <div class="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-rust/30 to-transparent"></div>
+      <div class="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-rust/30 to-transparent"></div>
+    </div>
+  </div>
+</div> 
