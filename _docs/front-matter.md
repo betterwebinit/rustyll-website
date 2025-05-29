@@ -314,11 +314,13 @@ layout = "default"
 
 ### JSON
 
+{% raw %}
 ```json
 {{{
   "title": "My Page",
   "layout": "default"
 }}}
 ```
+{% endraw %}
 
 All formats provide the same functionality, but YAML is the most commonly used.

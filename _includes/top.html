@@ -13,50 +13,124 @@
       theme: {
         extend: {
           colors: {
+            // Legacy colors (for backward compatibility)
             rust: {
               DEFAULT: '#D34516',
               dark: '#B7410E',
               light: '#FF6D3F'
             },
-            blackish: '#111111'
+            blackish: '#111111',
+            
+            // Modern shadcn/ui style system colors
+            border: "hsl(var(--border))",
+            input: "hsl(var(--input))",
+            ring: "hsl(var(--ring))",
+            background: "hsl(var(--background))",
+            foreground: "hsl(var(--foreground))",
+            primary: {
+              DEFAULT: "hsl(var(--primary))",
+              foreground: "hsl(var(--primary-foreground))",
+            },
+            secondary: {
+              DEFAULT: "hsl(var(--secondary))",
+              foreground: "hsl(var(--secondary-foreground))",
+            },
+            destructive: {
+              DEFAULT: "hsl(var(--destructive))",
+              foreground: "hsl(var(--destructive-foreground))",
+            },
+            success: {
+              DEFAULT: "hsl(var(--success))",
+              foreground: "hsl(var(--success-foreground))",
+            },
+            warning: {
+              DEFAULT: "hsl(var(--warning))",
+              foreground: "hsl(var(--warning-foreground))",
+            },
+            alert: {
+              DEFAULT: "hsl(var(--alert))",
+              foreground: "hsl(var(--alert-foreground))",
+            },
+            muted: {
+              DEFAULT: "hsl(var(--muted))",
+              foreground: "hsl(var(--muted-foreground))",
+            },
+            accent: {
+              DEFAULT: "hsl(var(--accent))",
+              foreground: "hsl(var(--accent-foreground))",
+            },
+            card: {
+              DEFAULT: "hsl(var(--card))",
+              foreground: "hsl(var(--card-foreground))",
+            },
+            popover: {
+              DEFAULT: "hsl(var(--popover))",
+              foreground: "hsl(var(--popover-foreground))",
+            },
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace']
           },
+          borderRadius: {
+            lg: "var(--radius)",
+            md: "calc(var(--radius) - 2px)",
+            sm: "calc(var(--radius) - 4px)",
+          },
+          animation: {
+            "accordion-down": "accordion-down 0.2s ease-out",
+            "accordion-up": "accordion-up 0.2s ease-out",
+            "float": "float 6s ease-in-out infinite",
+            "pulse-slow": "pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+            "ping-slow": "ping 3s cubic-bezier(0, 0, 0.2, 1) infinite",
+          },
+          keyframes: {
+            "accordion-down": {
+              from: { height: 0 },
+              to: { height: "var(--radix-accordion-content-height)" },
+            },
+            "accordion-up": {
+              from: { height: "var(--radix-accordion-content-height)" },
+              to: { height: 0 },
+            },
+            float: {
+              "0%, 100%": { transform: "translateY(0)" },
+              "50%": { transform: "translateY(-10px)" },
+            },
+          },
           typography: {
             DEFAULT: {
               css: {
                 maxWidth: 'none',
-                color: '#f3f4f6',
+                color: 'hsl(var(--foreground))',
                 a: {
-                  color: '#D34516',
+                  color: 'hsl(var(--primary))',
                   textDecoration: 'underline',
-                  textDecorationColor: 'rgba(211, 69, 22, 0.3)',
+                  textDecorationColor: 'hsl(var(--primary) / 0.3)',
                   '&:hover': {
-                    color: '#FF6D3F',
-                    textDecorationColor: 'rgba(255, 109, 63, 0.5)',
+                    color: 'hsl(var(--primary) / 0.9)',
+                    textDecorationColor: 'hsl(var(--primary) / 0.5)',
                   },
                 },
                 h1: {
-                  color: '#ffffff',
+                  color: 'hsl(var(--foreground))',
                   fontWeight: '600',
                 },
                 h2: {
-                  color: '#ffffff',
+                  color: 'hsl(var(--foreground))',
                   fontWeight: '600',
                 },
                 h3: {
-                  color: '#ffffff',
+                  color: 'hsl(var(--foreground))',
                   fontWeight: '500',
                 },
                 h4: {
-                  color: '#ffffff',
+                  color: 'hsl(var(--foreground))',
                   fontWeight: '500',
                 },
                 code: {
-                  color: '#FF6D3F',
-                  backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                  color: 'hsl(var(--primary))',
+                  backgroundColor: 'hsl(var(--muted) / 0.3)',
                   borderRadius: '0.25rem',
                   padding: '0.125rem 0.375rem',
                 },
@@ -67,33 +141,33 @@
                   content: '""',
                 },
                 pre: {
-                  backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                  backgroundColor: 'hsl(var(--muted) / 0.3)',
                   borderWidth: '1px',
-                  borderColor: '#374151',
+                  borderColor: 'hsl(var(--border))',
                   borderRadius: '0.5rem',
                 },
                 blockquote: {
-                  borderLeftColor: '#D34516',
-                  backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                  borderLeftColor: 'hsl(var(--primary))',
+                  backgroundColor: 'hsl(var(--muted) / 0.2)',
                   borderRadius: '0 0.375rem 0.375rem 0',
                 },
                 strong: {
-                  color: '#ffffff',
+                  color: 'hsl(var(--foreground))',
                   fontWeight: '600',
                 },
                 img: {
                   borderRadius: '0.5rem',
                   borderWidth: '1px',
-                  borderColor: '#374151',
+                  borderColor: 'hsl(var(--border))',
                 },
                 table: {
                   width: '100%',
                 },
                 thead: {
-                  backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                  backgroundColor: 'hsl(var(--muted) / 0.3)',
                 },
                 th: {
-                  color: '#ffffff',
+                  color: 'hsl(var(--foreground))',
                 },
               }
             }
@@ -125,6 +199,63 @@
       ]
     }
   </script>
+  
+  <style>
+    :root {
+      /* Base colors */
+      --background: 222.2 84% 4.9%;
+      --foreground: 210 40% 98%;
+      
+      /* Card colors */
+      --card: 222.2 84% 4.9%;
+      --card-foreground: 210 40% 98%;
+      
+      /* Popover colors */
+      --popover: 222.2 84% 4.9%;
+      --popover-foreground: 210 40% 98%;
+      
+      /* Primary colors - rust orange theme */
+      --primary: 20 80% 48%;
+      --primary-foreground: 210 40% 98%;
+      
+      /* Secondary colors */
+      --secondary: 217.2 32.6% 17.5%;
+      --secondary-foreground: 210 40% 98%;
+      
+      /* Muted colors */
+      --muted: 217.2 32.6% 17.5%;
+      --muted-foreground: 215 20.2% 65.1%;
+      
+      /* Accent colors */
+      --accent: 20 80% 48%;
+      --accent-foreground: 210 40% 98%;
+      
+      /* Alert/Warning/Success/Destructive colors */
+      --destructive: 0 62.8% 50.6%;
+      --destructive-foreground: 210 40% 98%;
+      
+      --success: 142.1 70.6% 45.3%;
+      --success-foreground: 144.9 80.4% 10%;
+      
+      --warning: 38 92% 50%;
+      --warning-foreground: 48 96% 89%;
+      
+      --alert: 0 84.2% 60.2%;
+      --alert-foreground: 210 40% 98%;
+      
+      /* Border/Input/Ring colors */
+      --border: 217.2 32.6% 17.5%;
+      --input: 217.2 32.6% 17.5%;
+      --ring: 20 80% 48%;
+      
+      /* Radius */
+      --radius: 0.5rem;
+      
+      /* Color vars for backward compatibility */
+      --accent-rgb: 211, 69, 22;
+    }
+  </style>
+  
   <link rel="icon" type="image/x-icon" href="{{ 'favicon.ico' | relative_url }}">
   {% seo %}
   <!--[if lt IE 9]>

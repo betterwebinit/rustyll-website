@@ -88,7 +88,7 @@ Zola's Tera templates convert to Rustyll's Liquid templates:
 <head>
     <meta charset="UTF-8">
     <title>{% raw %}{% block title %}{{ config.title }}{% endblock title %}{% endraw %}</title>
-    <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
+    <link rel="stylesheet" href="{% raw %}{{ get_url(path="style.css") }}{% endraw %}">
 </head>
 <body>
     <header>
@@ -280,7 +280,7 @@ Comparison:
 If you encounter template conversion issues:
 
 1. Tera uses `{% raw %}{% block content %}{% endblock content %}{% endraw %}` for layouts while Liquid uses `{% raw %}{{ content }}{% endraw %}`
-2. Zola's `{% raw %}{{ get_url() }}{% endraw %}` function becomes `{% raw %}{{ '/path' | relative_url }}{% endraw %}` in Rustyll
+2. Zola's {% raw %}{{ get_url(path="style.css") }}{% endraw %} function becomes `{% raw %}{{ '/path' | relative_url }}{% endraw %}` in Rustyll
 3. Tera's `{% raw %}{% for post in section.pages %}{% endraw %}` becomes `{% raw %}{% for post in site.posts %}{% endraw %}` in Liquid
 
 ### Front Matter Format

@@ -1,12 +1,12 @@
 {% comment %}
-  Primary navigation molecule component
+  Primary navigation molecule component - shadcn/ui button variants
   @param current_url - Current page URL
   @param classes - Additional CSS classes
 {% endcomment %}
 
-<ul class="flex items-center gap-1 sm:gap-2 md:gap-4 lg:gap-6 {{ include.classes }}">
+<ul class="flex items-center gap-2 {{ include.classes }}">
   {% for item in site.data.primary_nav %}
-    <li class="relative group">
+    <li>
       {% assign is_active = false %}
       {% if item.link == '/' %}
         {% if page.url == item.link %}
@@ -18,18 +18,38 @@
         {% endif %}
       {% endif %}
       
-      {% include components/atoms/nav-item.html
-        title=item.title
-        link=item.link
-        active=is_active
-      %}
-      
-      {% if is_active %}
-        <div class="absolute -top-1 -right-1 flex space-x-0.5">
-          <span class="h-1.5 w-1.5 rounded-full bg-rust animate-ping"></span>
-          <span class="h-1.5 w-1.5 rounded-full bg-rust animate-pulse"></span>
-        </div>
-      {% endif %}
+      <a href="{{ item.link | relative_url }}" 
+         class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2
+                {% if is_active %}
+                  bg-primary text-primary-foreground shadow hover:bg-primary/90
+                {% else %}
+                  text-muted-foreground hover:bg-accent hover:text-accent-foreground
+                {% endif %}"
+         {% if is_active %}aria-current="page"{% endif %}>
+        
+        {% if item.icon %}
+          <span class="mr-2 h-4 w-4">{{ item.icon }}</span>
+        {% endif %}
+        
+        {{ item.title }}
+      </a>
     </li>
   {% endfor %}
-</ul> 
+</ul>
+
+<style>
+  /* Add this to your global CSS or keep it here for component-specific styles */
+  :root {
+    --accent-rgb: 234, 88, 12; /* Adjust to match your accent color (this is for orange) */
+  }
+  
+  @keyframes pulse-border {
+    0% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.7); }
+    70% { box-shadow: 0 0 0 6px rgba(var(--accent-rgb), 0); }
+    100% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0); }
+  }
+  
+  .animate-pulse-border {
+    animation: pulse-border 2s infinite;
+  }
+</style> 

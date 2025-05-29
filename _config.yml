@@ -3,7 +3,7 @@ version: 0.1.0
 name: Rustyll • Lightning fast static sites
 description: Transform your plain text into static websites and blogs
 url: https://rustyll.org
-repository: https://github.com/rustyll/rustyll
+repository: https://github.com/betterwebinit/rustyll
 site_branch: master
 timezone: America/Los_Angeles
 twitter:
