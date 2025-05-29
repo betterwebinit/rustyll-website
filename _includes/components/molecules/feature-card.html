@@ -6,22 +6,29 @@
   @param link_text - Link text
   @param link_url - Link URL
   @param delay - Animation delay
+  @param classes - Additional CSS classes
 {% endcomment %}
 
-<div class="group" data-aos="fade-up" data-aos-delay="{{ include.delay | default: '0' }}">
-  <div class="relative">
-    <div class="absolute inset-0 bg-rust/30 rounded-2xl blur-xl group-hover:bg-rust/40 transition-all duration-700 opacity-80"></div>
-    <div class="relative p-8 rounded-2xl border border-white/10 bg-black/50 backdrop-blur-xl group-hover:bg-black/60 transition-all duration-300 h-full flex flex-col">
-      <div class="absolute top-0 right-0 w-40 h-40 bg-rust/10 rounded-full blur-[60px] opacity-60"></div>
-      <div class="mb-8 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-rust/20 to-rust/5 text-rust border border-rust/30 group-hover:scale-110 transition-transform duration-300 relative shadow-lg shadow-rust/10">
+<div class="feature-card-container {{ include.classes }}" data-aos="fade-up" data-aos-delay="{{ include.delay | default: '0' }}">
+  <div class="feature-card-perspective relative" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3">
+    <div class="feature-card-inner bg-gradient-to-br from-black/90 to-black/60 backdrop-blur-lg p-8 rounded-2xl border border-white/10 hover:border-rust/40 transition-all duration-300 h-full flex flex-col relative overflow-hidden group">
+
+      
+      <!-- Icon with enhanced animation -->
+      <div class="mb-8 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-rust/20 to-rust/5 text-rust border border-rust/30 group-hover:scale-110 transition-transform duration-300 relative shadow-lg shadow-rust/10 z-10">
+        <div class="icon-pulse absolute inset-0 bg-rust/20 rounded-xl scale-100 opacity-0"></div>
         {{ include.icon }}
         <div class="absolute inset-0 border border-rust/20 rounded-xl scale-110 opacity-0 group-hover:opacity-100 group-hover:scale-125 transition-all duration-700"></div>
       </div>
-      <h2 class="text-2xl font-bold text-white mb-3 tracking-tight">{{ include.title }}</h2>
-      <p class="text-gray-300 mb-6 leading-relaxed">
+      
+      <!-- Content with enhanced styling -->
+      <h2 class="text-2xl font-bold text-white mb-3 tracking-tight relative z-10 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-rust-light transition-colors duration-300">{{ include.title }}</h2>
+      <p class="text-gray-300 mb-6 leading-relaxed relative z-10">
         {{ include.description }}
       </p>
-      <div class="mt-auto">
+      
+      <!-- Link with enhanced animation -->
+      <div class="mt-auto relative z-10">
         <a href="{{ include.link_url }}" class="inline-flex items-center text-rust hover:text-rust-light transition-colors duration-200 group-hover:translate-x-1 transition-transform">
           <span>{{ include.link_text }}</span>
           <svg class="w-4 h-4 ml-1 transition-transform duration-200 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -29,6 +36,120 @@
           </svg>
         </a>
       </div>
+      
+      <!-- Bottom progress bar -->
+      <div class="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-rust to-rust-light group-hover:w-full transition-all duration-500 ease-out"></div>
     </div>
   </div>
-</div> 
+</div>
+
+<style>
+.feature-card-perspective {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.feature-card-inner {
+  transform: translateZ(0);
+  transition: transform 0.3s ease-out;
+}
+
+.card-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.card-laser-line {
+  animation: laser-scan 3s ease-out infinite;
+  box-shadow: 0 0 10px rgba(211, 69, 22, 0.8), 0 0 20px rgba(211, 69, 22, 0.5);
+  opacity: 0;
+  transform: translateY(0);
+}
+
+@keyframes laser-scan {
+  0%, 100% { 
+    opacity: 0;
+    transform: translateY(0);
+  }
+  10% { 
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 0.4;
+    transform: translateY(100%);
+  }
+  91% {
+    opacity: 0;
+  }
+}
+
+.icon-pulse {
+  animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Mouse tracking for 3D effect
+  const cards = document.querySelectorAll('.feature-card-inner');
+  
+  cards.forEach(card => {
+    const container = card.parentElement;
+    let bounds;
+    
+    function rotateToMouse(e) {
+      bounds = container.getBoundingClientRect();
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+      const leftX = mouseX - bounds.x;
+      const topY = mouseY - bounds.y;
+      const center = {
+        x: leftX - bounds.width / 2,
+        y: topY - bounds.height / 2
+      }
+      const distance = Math.sqrt(center.x**2 + center.y**2);
+      
+      card.style.transform = `
+        scale3d(1.05, 1.05, 1.05)
+        rotate3d(
+          ${center.y / 100},
+          ${-center.x / 100},
+          0,
+          ${Math.log(distance) * 2}deg
+        )
+      `;
+    }
+    
+    function resetStyles() {
+      card.style.transform = `
+        rotate3d(0, 0, 0, 0deg)
+        scale3d(1, 1, 1)
+      `;
+    }
+    
+    container.addEventListener('mouseenter', () => {
+      bounds = container.getBoundingClientRect();
+      document.addEventListener('mousemove', rotateToMouse);
+    });
+    
+    container.addEventListener('mouseleave', () => {
+      document.removeEventListener('mousemove', rotateToMouse);
+      resetStyles();
+    });
+  });
+});
+</script> 
