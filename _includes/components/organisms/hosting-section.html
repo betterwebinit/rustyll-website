@@ -1,0 +1,342 @@
+{% comment %}
+  Hosting section component
+{% endcomment %}
+
+<section class="relative py-20 transition-section overflow-hidden" id="section-hosting">
+  <!-- Animated background particles -->
+  <div class="absolute inset-0 pointer-events-none z-0 opacity-20">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(211,69,22,0.2),transparent_70%)]"></div>
+    <div class="particles-container"></div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+    <!-- Enhanced section title -->
+    <div class="text-center mb-16 max-w-3xl mx-auto">
+      {% include components/atoms/badge.html text="Universal Deployment" %}
+      
+      {% include components/atoms/section-title.html 
+        title="Deploy Anywhere Without Limits" 
+        highlight="Anywhere" %}
+        
+      <p class="text-white/80 text-lg mt-6">
+        Static sites built with Rustyll can be deployed on virtually any hosting platform,
+        giving you complete freedom in where your content lives.
+      </p>
+    </div>
+    
+    <!-- Hosts marquee - infinite scrolling -->
+    <div class="relative mb-16 py-8 overflow-hidden">
+      <!-- Glassmorphism container -->
+      <div class="absolute inset-0 bg-black/30 backdrop-blur-sm rounded-2xl border border-white/10"></div>
+      
+      <!-- Left fade gradient -->
+      <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black to-transparent z-10"></div>
+      <!-- Right fade gradient -->
+      <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black to-transparent z-10"></div>
+      
+      <!-- First marquee - left to right -->
+      <div class="marquee-container">
+        <div class="marquee marquee-left">
+          <div class="marquee-inner flex items-center gap-16 px-8">
+            <!-- Hosting providers logos -->
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/github.svg' | relative_url }}" alt="GitHub Pages" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">GitHub Pages</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/netlify.svg' | relative_url }}" alt="Netlify" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Netlify</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/vercel.svg' | relative_url }}" alt="Vercel" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Vercel</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/aws.svg' | relative_url }}" alt="AWS" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">AWS</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/azure.svg' | relative_url }}" alt="Azure" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Azure</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/digitalocean.svg' | relative_url }}" alt="DigitalOcean" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">DigitalOcean</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/firebase.svg' | relative_url }}" alt="Firebase" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Firebase</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/cloudflare.svg' | relative_url }}" alt="Cloudflare Pages" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Cloudflare Pages</span>
+            </div>
+          </div>
+          <!-- Duplicate for seamless loop -->
+          <div class="marquee-inner flex items-center gap-16 px-8">
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/github.svg' | relative_url }}" alt="GitHub Pages" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">GitHub Pages</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/netlify.svg' | relative_url }}" alt="Netlify" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Netlify</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/vercel.svg' | relative_url }}" alt="Vercel" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Vercel</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/aws.svg' | relative_url }}" alt="AWS" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">AWS</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/azure.svg' | relative_url }}" alt="Azure" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Azure</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/digitalocean.svg' | relative_url }}" alt="DigitalOcean" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">DigitalOcean</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/firebase.svg' | relative_url }}" alt="Firebase" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Firebase</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/cloudflare.svg' | relative_url }}" alt="Cloudflare Pages" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Cloudflare Pages</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Second marquee - right to left (slower) -->
+      <div class="marquee-container mt-8">
+        <div class="marquee marquee-right">
+          <div class="marquee-inner flex items-center gap-16 px-8">
+            <!-- More hosting providers logos -->
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/render.svg' | relative_url }}" alt="Render" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Render</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/heroku.svg' | relative_url }}" alt="Heroku" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Heroku</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/gcp.svg' | relative_url }}" alt="Google Cloud" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Google Cloud</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/surge.svg' | relative_url }}" alt="Surge" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Surge</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/gitlab.svg' | relative_url }}" alt="GitLab Pages" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">GitLab Pages</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/fly.svg' | relative_url }}" alt="Fly.io" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Fly.io</span>
+            </div>
+          </div>
+          <!-- Duplicate for seamless loop -->
+          <div class="marquee-inner flex items-center gap-16 px-8">
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/render.svg' | relative_url }}" alt="Render" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Render</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/heroku.svg' | relative_url }}" alt="Heroku" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Heroku</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/gcp.svg' | relative_url }}" alt="Google Cloud" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Google Cloud</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/surge.svg' | relative_url }}" alt="Surge" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Surge</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/gitlab.svg' | relative_url }}" alt="GitLab Pages" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">GitLab Pages</span>
+            </div>
+            <div class="host-logo">
+              <img src="{{ 'img/hosts/fly.svg' | relative_url }}" alt="Fly.io" class="h-10 w-auto">
+              <span class="mt-2 text-xs text-white/60">Fly.io</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Futuristic feature cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+      <!-- Card 1 -->
+      <div class="relative p-6 rounded-2xl bg-gradient-to-br from-black/70 to-black/90 border border-white/10 backdrop-blur-lg transform hover:scale-[1.02] transition-all duration-500 overflow-hidden group">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(211,69,22,0.1),transparent_50%)]"></div>
+        
+        <div class="relative z-10">
+          <div class="p-3 bg-black/50 rounded-xl inline-flex items-center justify-center mb-4 border border-rust/20 group-hover:border-rust/40 transition-all duration-300">
+            <svg class="w-6 h-6 text-rust" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">One-Command Deploy</h3>
+          <p class="text-white/70">Deploy your site with a single command to any host of your choice.</p>
+        </div>
+      </div>
+      
+      <!-- Card 2 -->
+      <div class="relative p-6 rounded-2xl bg-gradient-to-br from-black/70 to-black/90 border border-white/10 backdrop-blur-lg transform hover:scale-[1.02] transition-all duration-500 overflow-hidden group">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(211,69,22,0.1),transparent_50%)]"></div>
+        
+        <div class="relative z-10">
+          <div class="p-3 bg-black/50 rounded-xl inline-flex items-center justify-center mb-4 border border-rust/20 group-hover:border-rust/40 transition-all duration-300">
+            <svg class="w-6 h-6 text-rust" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Custom Domains</h3>
+          <p class="text-white/70">Easily configure your site with your own domain and SSL certificates.</p>
+        </div>
+      </div>
+      
+      <!-- Card 3 -->
+      <div class="relative p-6 rounded-2xl bg-gradient-to-br from-black/70 to-black/90 border border-white/10 backdrop-blur-lg transform hover:scale-[1.02] transition-all duration-500 overflow-hidden group">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(211,69,22,0.1),transparent_50%)]"></div>
+        
+        <div class="relative z-10">
+          <div class="p-3 bg-black/50 rounded-xl inline-flex items-center justify-center mb-4 border border-rust/20 group-hover:border-rust/40 transition-all duration-300">
+            <svg class="w-6 h-6 text-rust" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Global CDN</h3>
+          <p class="text-white/70">Your content is automatically distributed to global edge networks for speed.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- CTA section -->
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-black/80 to-black/50 border border-white/10 shadow-2xl backdrop-blur-xl p-8 md:p-12">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(211,69,22,0.15),transparent_50%)]"></div>
+      
+      <!-- Grid pattern -->
+      <div class="absolute inset-0 bg-[linear-gradient(rgba(211,69,22,0.03)_1px,transparent_1px),linear-gradient(to_right,rgba(211,69,22,0.03)_1px,transparent_1px)] bg-[size:20px_20px] opacity-20"></div>
+      
+      <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div>
+          <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">Ready to deploy your site?</h3>
+          <p class="text-white/80 text-lg max-w-2xl">
+            Follow our deployment guides for step-by-step instructions for all major hosting platforms.
+          </p>
+        </div>
+        
+        <a href="/docs/deployment/" class="inline-flex items-center px-8 py-4 rounded-xl bg-gradient-to-r from-rust to-rust-dark text-white hover:from-rust-light hover:to-rust transition-all duration-300 font-medium transform hover:translate-y-[-2px] shadow-lg shadow-rust/20 hover:shadow-rust/30 group">
+          <span class="text-lg">View Deployment Guides</span>
+          <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Marquee animation */
+  .marquee-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .marquee {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+  }
+  
+  .marquee-left .marquee-inner {
+    display: flex;
+    animation: marquee-left 60s linear infinite;
+  }
+  
+  .marquee-right .marquee-inner {
+    display: flex;
+    animation: marquee-right 80s linear infinite;
+  }
+  
+  .host-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .host-logo:hover {
+    transform: scale(1.1);
+  }
+  
+  @keyframes marquee-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+  
+  @keyframes marquee-right {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(0); }
+  }
+  
+  /* Particles animation */
+  .particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .particles-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 20% 30%, rgba(211,69,22,0.15) 0%, transparent 8%),
+      radial-gradient(circle at 70% 60%, rgba(211,69,22,0.1) 0%, transparent 10%),
+      radial-gradient(circle at 40% 80%, rgba(211,69,22,0.12) 0%, transparent 6%),
+      radial-gradient(circle at 80% 10%, rgba(211,69,22,0.08) 0%, transparent 7%);
+    animation: particles-float 15s ease-in-out infinite alternate;
+  }
+  
+  @keyframes particles-float {
+    0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+    100% { background-position: 5% 10%, -5% -10%, 10% -5%, -10% 5%; }
+  }
+  
+  /* Scanning animation */
+  @keyframes scan {
+    0% { top: -100%; }
+    100% { top: 100%; }
+  }
+  
+  .animate-scan {
+    animation: scan 2s ease-in-out infinite;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+</style> 

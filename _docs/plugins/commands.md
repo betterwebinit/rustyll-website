@@ -4,11 +4,11 @@ permalink: /docs/plugins/commands/
 ---
 As of version {% include docs_version_badge.html version="2.5.0"%}, Jekyll can be extended with plugins which provide
 subcommands for the `jekyll` executable. This is possible by including the
-relevant plugins in a `Gemfile` group called `:jekyll_plugins`:
+relevant plugins in a `Gemfile` group called `:rustyll_plugins`:
 
 ```ruby
-group :jekyll_plugins do
-  gem "my_fancy_jekyll_plugin"
+group :rustyll_plugins do
+  gem "my_fancy_rustyll_plugin"
 end
 ```
 

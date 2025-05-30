@@ -21,15 +21,15 @@ run unless you also specify a `production` environment in the build command,
 like this:
 
 ```sh
-JEKYLL_ENV=production jekyll build
+RUSTYLL_ENV=production jekyll build
 ```
 
 Specifying an environment value allows you to make certain content available
 only within specific environments.
 
-The default value for `JEKYLL_ENV` is `development`. Therefore if you omit
-`JEKYLL_ENV` from the build arguments, the default value will be
-`JEKYLL_ENV=development`. Any content inside
+The default value for `RUSTYLL_ENV` is `development`. Therefore if you omit
+`RUSTYLL_ENV` from the build arguments, the default value will be
+`RUSTYLL_ENV=development`. Any content inside
 {% raw %}`{% if jekyll.environment == "development" %}`{% endraw %} tags will
 automatically appear in the build.
 

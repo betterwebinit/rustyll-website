@@ -1,0 +1,10 @@
+{% comment %}
+  Terminal Command Line Atom
+  @param command - The command text to display
+  @param directory - The directory to show in prompt (optional, defaults to "~")
+{% endcomment %}
+
+<div class="command-line">
+  <span class="prompt">{{ include.directory | default: "~" }}$</span>
+  <span class="command-text">{{ include.command }}</span>
+</div> 

@@ -10,15 +10,15 @@ The following is a reference of the available data.
 
 ## Global Variables
 
-{% include docs_variables_table.html scope=site.data.jekyll_variables.global %}
+{% include docs_variables_table.html scope=site.data.rustyll_variables.global %}
 
 ## Site Variables
 
-{% include docs_variables_table.html scope=site.data.jekyll_variables.site %}
+{% include docs_variables_table.html scope=site.data.rustyll_variables.site %}
 
 ## Page Variables
 
-{% include docs_variables_table.html scope=site.data.jekyll_variables.page %}
+{% include docs_variables_table.html scope=site.data.rustyll_variables.page %}
 
 <div class="note">
   <h5>ProTip™: Use Custom Front Matter</h5>
@@ -36,7 +36,7 @@ The following is a reference of the available data.
 
 ## Rustyll Variables
 
-{% include docs_variables_table.html scope=site.data.jekyll_variables.jekyll %}
+{% include docs_variables_table.html scope=site.data.rustyll_variables.jekyll %}
 
 ## Rustyll Performance Variables
 
@@ -73,11 +73,11 @@ Rustyll adds several performance-related variables that can be used in your temp
 
 ## Theme Variables
 
-{% include docs_variables_table.html scope=site.data.jekyll_variables.theme %}
+{% include docs_variables_table.html scope=site.data.rustyll_variables.theme %}
 
 ## Paginator
 
-{% include docs_variables_table.html scope=site.data.jekyll_variables.paginator %}
+{% include docs_variables_table.html scope=site.data.rustyll_variables.paginator %}
 
 <div class="note info">
   <h5>Paginator variable availability</h5>

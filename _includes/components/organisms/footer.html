@@ -35,11 +35,14 @@
     
     <!-- Bottom border -->
     <div class="border-t border-gray-800 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <span class="text-gray-500 text-sm">Site Version: {{ site.version }}</span>
       <p class="text-gray-500 text-sm">
         Made with 
-        <span class="text-red-500">❤</span> 
-        by the Rustyll community
+        <span class="text-red-500 animate-pulse">❤</span> 
+        by the <a href="https://better-web.org" class="text-white hover:text-rust transition-colors">Better Web</a> community
       </p>
+      </div>
       
       <!-- Scroll indicator -->
       <div class="hidden md:block text-gray-600 text-xs transition-opacity duration-300 opacity-70 hover:opacity-100">

@@ -1,0 +1,15 @@
+{% comment %}
+  Terminal Header Atom
+  @param title - Terminal title (optional, defaults to "Rustyll Terminal")
+{% endcomment %}
+
+<div class="terminal-header">
+  <div class="terminal-buttons">
+    <div class="terminal-button red"></div>
+    <div class="terminal-button yellow"></div>
+    <div class="terminal-button green"></div>
+  </div>
+  <div class="terminal-title">
+    <span>{{ include.title | default: "Rustyll Terminal" }}</span>
+  </div>
+</div> 

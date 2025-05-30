@@ -9,11 +9,9 @@
   @param classes - Additional CSS classes
 {% endcomment %}
 
-<div class="feature-card-container {{ include.classes }}" data-aos="fade-up" data-aos-delay="{{ include.delay | default: '0' }}">
-  <div class="feature-card-perspective relative" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3">
-    <div class="feature-card-inner bg-gradient-to-br from-black/90 to-black/60 backdrop-blur-lg p-8 rounded-2xl border border-white/10 hover:border-rust/40 transition-all duration-300 h-full flex flex-col relative overflow-hidden group">
-
-      
+<div class="feature-card-container group perspective-500 {{ include.classes }}" data-aos="fade-up" data-aos-delay="{{ include.delay | default: '0' }}">
+  <div class="feature-card-perspective relative transform transition-all duration-500 preserve-3d group-hover:rotate-y-10 group-hover:scale-110 group-hover:z-10" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3">
+    <div class="feature-card-inner bg-black/60 backdrop-blur-xl p-8 rounded-2xl border border-white/10 hover:border-rust/30 transition-all duration-300 h-full flex flex-col relative overflow-hidden group">
       <!-- Icon with enhanced animation -->
       <div class="mb-8 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-rust/20 to-rust/5 text-rust border border-rust/30 group-hover:scale-110 transition-transform duration-300 relative shadow-lg shadow-rust/10 z-10">
         <div class="icon-pulse absolute inset-0 bg-rust/20 rounded-xl scale-100 opacity-0"></div>
@@ -37,16 +35,22 @@
         </a>
       </div>
       
-      <!-- Bottom progress bar -->
-      <div class="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-rust to-rust-light group-hover:w-full transition-all duration-500 ease-out"></div>
+      <!-- Hover indicator line (migration-card style) -->
+      <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-transparent via-rust to-transparent group-hover:w-full transition-all duration-300"></div>
     </div>
+    
+    <!-- Futuristic reflection effect -->
+    <div class="absolute inset-0 rounded-xl bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
   </div>
 </div>
 
 <style>
+.perspective-500 {
+  perspective: 1000px;
+}
+
 .feature-card-perspective {
   transform-style: preserve-3d;
-  perspective: 1000px;
 }
 
 .feature-card-inner {

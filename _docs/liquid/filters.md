@@ -65,7 +65,7 @@ Rustyll adds several high-performance filters of its own, all of which you can f
     </tr>
   </thead>
   <tbody>
-    {% for filter in site.data.jekyll_filters %}
+    {% for filter in site.data.rustyll_filters %}
       <tr>
         <td>
           <p id="{{ filter.name | slugify }}" class="name"><strong>{{ filter.name }}</strong></p>

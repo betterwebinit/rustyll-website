@@ -1,0 +1,757 @@
+{% comment %}
+  Terminal Playground Molecule
+  @param title - Terminal title (optional)
+{% endcomment %}
+
+<div class="terminal-playground hidden" id="terminal-playground">
+  <!-- Terminal window -->
+  <div class="terminal-window">
+    <!-- Include the terminal header atom -->
+    {% include components/atoms/terminal-header.html 
+      title=include.title %}
+    
+    <!-- Terminal content with scrollable area -->
+    <div class="terminal-content" id="terminal-playground-content">
+      <!-- Scanlines overlay -->
+      <div class="scanlines"></div>
+      
+      <!-- Commands and outputs -->
+      <div class="command-history" id="terminal-playground-history">
+        <!-- Commands will be added here dynamically -->
+      </div>
+      
+      <!-- Interactive command prompt -->
+      <div class="interactive-prompt" id="terminal-prompt">
+        <div class="flex items-start">
+          <span class="prompt" id="terminal-prompt-text">~/my-awesome-site$</span>
+          <input type="text" class="command-input" id="terminal-input" autocomplete="off" spellcheck="false" placeholder="Type a command (try 'help')">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    setupTerminalPlayground();
+  });
+  
+  function setupTerminalPlayground() {
+    const terminalContent = document.getElementById('terminal-playground-content');
+    const commandHistory = document.getElementById('terminal-playground-history');
+    const commandInput = document.getElementById('terminal-input');
+    const promptText = document.getElementById('terminal-prompt-text');
+    
+    // Terminal state
+    const terminalState = {
+      commandHistory: [],
+      historyIndex: -1,
+      currentCommand: '',
+      currentDirectory: '~/my-awesome-site',
+      
+      // Virtual filesystem
+      filesystem: {
+        '~': {
+          type: 'directory',
+          contents: {
+            'my-awesome-site': {
+              type: 'directory',
+              contents: {
+                'src': {
+                  type: 'directory',
+                  contents: {
+                    'index.md': { type: 'file', content: '# Welcome to my site\n\nThis is the homepage.' },
+                    'about.md': { type: 'file', content: '# About\n\nThis is the about page.' },
+                    'contact.md': { type: 'file', content: '# Contact\n\nGet in touch with us.' },
+                    'posts': {
+                      type: 'directory',
+                      contents: {
+                        '2025-01-01-welcome.md': { type: 'file', content: '# Welcome post\n\nThis is my first post!' }
+                      }
+                    }
+                  }
+                },
+                '.rustyll': {
+                  type: 'directory',
+                  contents: {
+                    'config.yml': { type: 'file', content: 'title: My Awesome Site\nurl: https://example.com' }
+                  }
+                },
+                'Cargo.toml': { type: 'file', content: '[package]\nname = "my-awesome-site"\nversion = "0.1.0"' }
+              }
+            }
+          }
+        }
+      }
+    };
+    
+    // Command database
+    const commandDatabase = {
+      // File system commands
+      "ls": {
+        description: "List directory contents",
+        usage: "ls [directory]",
+        action: function(args) {
+          const targetPath = args[0] || '.';
+          const dir = resolvePath(targetPath);
+          
+          if (!dir || dir.type !== 'directory') {
+            return `ls: cannot access '${targetPath}': No such directory`;
+          }
+          
+          let output = '';
+          const entries = Object.entries(dir.contents);
+          
+          if (entries.length === 0) {
+            return "(empty directory)";
+          }
+          
+          const dirs = entries.filter(([_, item]) => item.type === 'directory')
+            .map(([name, _]) => `<span class="text-blue-400">${name}/</span>`);
+            
+          const files = entries.filter(([_, item]) => item.type === 'file')
+            .map(([name, _]) => name);
+            
+          return [...dirs, ...files].join('  ');
+        }
+      },
+      "cd": {
+        description: "Change directory",
+        usage: "cd [directory]",
+        action: function(args) {
+          const targetPath = args[0] || '~';
+          const dir = resolvePath(targetPath);
+          
+          if (!dir) {
+            return `cd: no such directory: ${targetPath}`;
+          }
+          
+          if (dir.type !== 'directory') {
+            return `cd: not a directory: ${targetPath}`;
+          }
+          
+          // Update current directory
+          const newPath = getAbsolutePath(targetPath);
+          terminalState.currentDirectory = newPath;
+          
+          // Update prompt
+          updatePrompt();
+          
+          return '';
+        }
+      },
+      "pwd": {
+        description: "Print working directory",
+        usage: "pwd",
+        action: function() {
+          return terminalState.currentDirectory;
+        }
+      },
+      "cat": {
+        description: "Display file contents",
+        usage: "cat <file>",
+        action: function(args) {
+          if (!args[0]) {
+            return "cat: missing file operand";
+          }
+          
+          const file = resolvePath(args[0]);
+          
+          if (!file) {
+            return `cat: ${args[0]}: No such file or directory`;
+          }
+          
+          if (file.type !== 'file') {
+            return `cat: ${args[0]}: Is a directory`;
+          }
+          
+          return file.content;
+        }
+      },
+      "touch": {
+        description: "Create a new file",
+        usage: "touch <filename>",
+        action: function(args) {
+          if (!args[0]) {
+            return "touch: missing file operand";
+          }
+          
+          const filename = args[0];
+          const pathParts = filename.split('/');
+          const actualFilename = pathParts.pop();
+          const dirPath = pathParts.length > 0 ? pathParts.join('/') : '.';
+          
+          const dir = resolvePath(dirPath);
+          
+          if (!dir || dir.type !== 'directory') {
+            return `touch: cannot touch '${filename}': No such directory`;
+          }
+          
+          // Create file in the virtual filesystem
+          if (dirPath === '.') {
+            // Current directory
+            const currentDir = getCurrentDirectory();
+            currentDir.contents[actualFilename] = { type: 'file', content: '' };
+          } else {
+            // Specific directory
+            dir.contents[actualFilename] = { type: 'file', content: '' };
+          }
+          
+          return `Created file: ${actualFilename}`;
+        }
+      },
+      "mkdir": {
+        description: "Create a new directory",
+        usage: "mkdir <directory>",
+        action: function(args) {
+          if (!args[0]) {
+            return "mkdir: missing directory operand";
+          }
+          
+          const dirname = args[0];
+          const pathParts = dirname.split('/');
+          const actualDirname = pathParts.pop();
+          const parentPath = pathParts.length > 0 ? pathParts.join('/') : '.';
+          
+          const parentDir = resolvePath(parentPath);
+          
+          if (!parentDir || parentDir.type !== 'directory') {
+            return `mkdir: cannot create directory '${dirname}': No such directory`;
+          }
+          
+          // Create directory in the virtual filesystem
+          if (parentPath === '.') {
+            // Current directory
+            const currentDir = getCurrentDirectory();
+            currentDir.contents[actualDirname] = { type: 'directory', contents: {} };
+          } else {
+            // Specific directory
+            parentDir.contents[actualDirname] = { type: 'directory', contents: {} };
+          }
+          
+          return `Created directory: ${actualDirname}`;
+        }
+      },
+      "echo": {
+        description: "Display a line of text or create a file with content",
+        usage: "echo <text> [> filename]",
+        action: function(args) {
+          if (args.length === 0) {
+            return "";
+          }
+          
+          const text = args.join(' ');
+          
+          // Check for file redirection
+          const redirectMatch = text.match(/(.*)\s+>\s+(.*)/);
+          if (redirectMatch) {
+            const content = redirectMatch[1].trim();
+            const filename = redirectMatch[2].trim();
+            
+            const pathParts = filename.split('/');
+            const actualFilename = pathParts.pop();
+            const dirPath = pathParts.length > 0 ? pathParts.join('/') : '.';
+            
+            const dir = resolvePath(dirPath);
+            
+            if (!dir || dir.type !== 'directory') {
+              return `echo: cannot create file '${filename}': No such directory`;
+            }
+            
+            // Create or overwrite file
+            if (dirPath === '.') {
+              // Current directory
+              const currentDir = getCurrentDirectory();
+              currentDir.contents[actualFilename] = { type: 'file', content };
+            } else {
+              // Specific directory
+              dir.contents[actualFilename] = { type: 'file', content };
+            }
+            
+            return `Created file: ${actualFilename}`;
+          }
+          
+          // Just echo the text
+          return text;
+        }
+      },
+      
+      // rustyll commands
+      "rustyll": {
+        description: "Static site generator",
+        usage: "rustyll [command] [options]",
+        subcommands: ["build", "serve", "new", "help"]
+      },
+      "rustyll build": {
+        description: "Build your site",
+        usage: "rustyll build [options]",
+        options: [
+          "-w, --watch", "--config FILE", "-p, --plugins DIR", "--layouts DIR",
+          "-D, --drafts", "--future", "--unpublished", "--lsi", "--limit_posts NUM",
+          "--force_polling", "-V, --verbose", "-q, --quiet", "-I, --incremental",
+          "--profile", "--strict_front_matter"
+        ],
+        action: function(args) {
+          const hasWatch = args.includes('-w') || args.includes('--watch');
+          const output = "Building site...\n";
+          
+          // List files that would be generated
+          const srcDir = resolvePath('src');
+          let fileCount = 0;
+          
+          if (srcDir && srcDir.type === 'directory') {
+            const processDir = (dir, path = '') => {
+              Object.entries(dir.contents).forEach(([name, item]) => {
+                const itemPath = path ? `${path}/${name}` : name;
+                if (item.type === 'file' && name.endsWith('.md')) {
+                  fileCount++;
+                } else if (item.type === 'directory') {
+                  processDir(item, itemPath);
+                }
+              });
+            };
+            
+            processDir(srcDir);
+          }
+          
+          const buildOutput = output + `Done! ${fileCount} files generated in ${(Math.random() * 0.5 + 0.3).toFixed(2)} seconds.`;
+          
+          if (hasWatch) {
+            return buildOutput + "\nWatching for changes...";
+          }
+          
+          return buildOutput;
+        }
+      },
+      "rustyll serve": {
+        description: "Serve your site locally",
+        usage: "rustyll serve [options]",
+        options: [
+          "-P, --port PORT", "-H, --host HOSTNAME", "-l, --livereload",
+          "--livereload-ignore GLOB", "--livereload-min-delay SECONDS",
+          "--livereload-max-delay SECONDS", "--livereload-port PORT",
+          "-o, --open-url", "-B, --detach", "--skip-initial-build",
+          "--show-dir-listing", "--ssl-key", "--ssl-cert"
+        ],
+        action: function(args) {
+          const port = getOptionValue(args, '-P') || getOptionValue(args, '--port') || '4000';
+          const host = getOptionValue(args, '-H') || getOptionValue(args, '--host') || 'localhost';
+          
+          return `Building site...\nDone! Site built successfully.
+Server running at http://${host}:${port}
+LiveReload enabled on port ${parseInt(port) + 1}
+Press Ctrl+C to stop`;
+        }
+      },
+      "rustyll new": {
+        description: "Create a new Rustyll site",
+        usage: "rustyll new <PATH> [options]",
+        options: ["--blank", "--force"],
+        action: function(args) {
+          if (args.length === 0) {
+            return "Error: Please specify a path for the new site.";
+          }
+          
+          const siteName = args[0];
+          const isBlank = args.includes('--blank');
+          
+          return `Creating new site at ${siteName}...
+${isBlank ? 'Creating blank site...' : 'Using default template...'}
+Creating directory structure...
+Creating configuration files...
+${isBlank ? '' : 'Creating default posts and pages...'}
+Done! New site created at ${siteName}
+
+To start your site, run:
+  cd ${siteName}
+  rustyll serve`;
+        }
+      },
+      "rustyll help": {
+        description: "Show help for commands",
+        usage: "rustyll help [command]",
+        action: function(args) {
+          const command = args[0];
+          
+          if (!command) {
+            return `Rustyll is a static site generator
+
+Basic Usage:
+  rustyll build                   - Build your site
+  rustyll serve                   - Serve your site locally
+  rustyll new <PATH>              - Creates a new site with default content
+  rustyll help                    - Show help
+  rustyll help <command>          - Show help for specific command`;
+          }
+          
+          const cmdKey = "rustyll " + command;
+          const cmd = commandDatabase[cmdKey];
+          
+          if (cmd) {
+            let output = `rustyll ${command} - ${cmd.description}\n\nUsage: ${cmd.usage}\n\nOptions:`;
+            if (cmd.options && cmd.options.length > 0) {
+              cmd.options.forEach(opt => {
+                output += `\n  ${opt}`;
+              });
+            } else {
+              output += "\n  No specific options";
+            }
+            
+            // Add global options
+            output += "\n\nGlobal Options:";
+            output += "\n  -s, --source DIR                 Change the directory where Rustyll will read files";
+            output += "\n  -d, --destination DIR            Change the directory where Rustyll will write files";
+            output += "\n  --safe                           Disable non-whitelisted plugins and caching";
+            
+            return output;
+          } else {
+            return `Unknown command: ${command}\nTry 'rustyll help' for a list of commands`;
+          }
+        }
+      },
+      
+      // Utility commands
+      "clear": {
+        description: "Clear the terminal screen",
+        usage: "clear",
+        action: function() {
+          // Clear all command entries
+          while (commandHistory.firstChild) {
+            commandHistory.removeChild(commandHistory.firstChild);
+          }
+          return "";
+        }
+      },
+      "help": {
+        description: "Display help information",
+        usage: "help [command]",
+        action: function(args) {
+          if (args.length > 0) {
+            const cmd = commandDatabase[args[0]];
+            if (cmd) {
+              return `${args[0]} - ${cmd.description}\nUsage: ${cmd.usage || args[0]}`;
+            } else {
+              return `Unknown command: ${args[0]}`;
+            }
+          }
+          
+          return `Available commands:
+  Filesystem:
+    ls [dir]           - List directory contents
+    cd [dir]           - Change directory
+    pwd                - Print working directory
+    cat <file>         - Display file contents
+    touch <file>       - Create a new file
+    mkdir <dir>        - Create a new directory
+    echo <text>        - Display a line of text
+    echo <text> > file - Write text to a file
+    
+  Rustyll commands:
+    rustyll build      - Build your site
+    rustyll serve      - Serve your site locally
+    rustyll new <PATH> - Create a new Rustyll site
+    rustyll help       - Show help for Rustyll commands
+    
+  Utility:
+    clear              - Clear the terminal screen
+    help [command]     - Show help information
+    
+For more details, try 'help [command]' or 'rustyll help [command]'`;
+        }
+      }
+    };
+    
+    // Filesystem helper functions
+    function getCurrentDirectory() {
+      const path = terminalState.currentDirectory;
+      return resolvePath(path);
+    }
+    
+    function resolvePath(path) {
+      if (!path) return null;
+      
+      // Handle absolute path
+      if (path.startsWith('~')) {
+        const parts = path.split('/').filter(Boolean);
+        parts[0] = '~'; // Replace the empty string with ~
+        
+        let current = terminalState.filesystem['~'];
+        for (let i = 1; i < parts.length; i++) {
+          if (parts[i] === '.' || parts[i] === '') continue;
+          if (parts[i] === '..') {
+            // Go up one level
+            parts.splice(i-1, 2);
+            i -= 2;
+            continue;
+          }
+          
+          if (!current.contents[parts[i]]) {
+            return null; // Path not found
+          }
+          current = current.contents[parts[i]];
+        }
+        return current;
+      }
+      
+      // Handle relative path
+      if (path === '.') {
+        return getCurrentDirectory();
+      }
+      
+      // Convert to absolute path and resolve
+      const absPath = getAbsolutePath(path);
+      return resolvePath(absPath);
+    }
+    
+    function getAbsolutePath(relativePath) {
+      if (relativePath.startsWith('~')) {
+        return relativePath;
+      }
+      
+      if (relativePath === '.') {
+        return terminalState.currentDirectory;
+      }
+      
+      if (relativePath === '..') {
+        const parts = terminalState.currentDirectory.split('/');
+        parts.pop();
+        return parts.join('/') || '~';
+      }
+      
+      if (relativePath.startsWith('./')) {
+        relativePath = relativePath.substring(2);
+      }
+      
+      if (relativePath.startsWith('../')) {
+        const parts = terminalState.currentDirectory.split('/');
+        parts.pop();
+        const parentDir = parts.join('/') || '~';
+        return getAbsolutePath(relativePath.substring(3)).replace(/^~/, parentDir);
+      }
+      
+      // Simple relative path
+      return `${terminalState.currentDirectory}/${relativePath}`;
+    }
+    
+    function updatePrompt() {
+      promptText.textContent = `${terminalState.currentDirectory}$`;
+    }
+    
+    // Get value for an option (e.g., --port 8080 or -P 8080)
+    function getOptionValue(args, optionFlag) {
+      const index = args.indexOf(optionFlag);
+      if (index !== -1 && index < args.length - 1) {
+        return args[index + 1];
+      }
+      return null;
+    }
+    
+    // Process user command
+    function processCommand(command) {
+      if (!command.trim()) return;
+      
+      // Add to command history
+      terminalState.commandHistory.push(command);
+      terminalState.historyIndex = terminalState.commandHistory.length;
+      
+      // Create command entry
+      const commandEntry = document.createElement('div');
+      commandEntry.className = 'command-entry';
+      
+      // Add command line
+      const commandLine = document.createElement('div');
+      commandLine.className = 'command-line';
+      
+      const prompt = document.createElement('span');
+      prompt.className = 'prompt';
+      prompt.textContent = promptText.textContent;
+      
+      const commandText = document.createElement('span');
+      commandText.className = 'command-text';
+      commandText.textContent = command;
+      
+      commandLine.appendChild(prompt);
+      commandLine.appendChild(commandText);
+      commandEntry.appendChild(commandLine);
+      
+      // Process command and generate output
+      let output = '';
+      const args = command.trim().split(/\s+/);
+      const baseCommand = args[0];
+      const commandArgs = args.slice(1);
+      
+      if (commandDatabase[command]) {
+        // Direct command match
+        const cmd = commandDatabase[command];
+        if (typeof cmd.action === 'function') {
+          output = cmd.action(commandArgs);
+        }
+      } else if (baseCommand === 'rustyll') {
+        // Handle rustyll subcommands
+        const subCommand = args[1];
+        const subCommandKey = `rustyll ${subCommand}`;
+        
+        if (commandDatabase[subCommandKey]) {
+          const cmd = commandDatabase[subCommandKey];
+          if (typeof cmd.action === 'function') {
+            output = cmd.action(args.slice(2));
+          }
+        } else {
+          output = `Unknown rustyll command: ${subCommand}\nTry 'rustyll help' for a list of commands`;
+        }
+      } else if (commandDatabase[baseCommand]) {
+        // Handle regular commands
+        const cmd = commandDatabase[baseCommand];
+        if (typeof cmd.action === 'function') {
+          output = cmd.action(commandArgs);
+        }
+      } else {
+        output = `Command not found: ${baseCommand}\nTry 'help' for a list of commands`;
+      }
+      
+      // Add output if any and the clear command didn't clear the history
+      if (output && commandHistory.children.length > 0) {
+        const outputElement = document.createElement('div');
+        outputElement.className = 'output-text whitespace-pre-line';
+        outputElement.innerHTML = output; // Allow HTML in output for colorization
+        commandEntry.appendChild(outputElement);
+      }
+      
+      // Add to command history display
+      commandHistory.appendChild(commandEntry);
+      
+      // Scroll to bottom and reset input
+      setTimeout(() => {
+        terminalContent.scrollTop = terminalContent.scrollHeight;
+        commandInput.value = '';
+      }, 10);
+    }
+    
+    // Command history navigation with up/down arrows
+    commandInput.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        const command = commandInput.value.trim();
+        if (command) {
+          processCommand(command);
+        }
+        event.preventDefault();
+      } else if (event.key === 'ArrowUp') {
+        // Navigate up in history
+        if (terminalState.historyIndex > 0) {
+          // Save current command if at the end of history
+          if (terminalState.historyIndex === terminalState.commandHistory.length) {
+            terminalState.currentCommand = commandInput.value;
+          }
+          
+          terminalState.historyIndex--;
+          commandInput.value = terminalState.commandHistory[terminalState.historyIndex];
+          
+          // Move cursor to end of input
+          setTimeout(() => {
+            commandInput.selectionStart = commandInput.selectionEnd = commandInput.value.length;
+          }, 0);
+        }
+        event.preventDefault();
+      } else if (event.key === 'ArrowDown') {
+        // Navigate down in history
+        if (terminalState.historyIndex < terminalState.commandHistory.length) {
+          terminalState.historyIndex++;
+          
+          if (terminalState.historyIndex === terminalState.commandHistory.length) {
+            // At the end of history, restore current command
+            commandInput.value = terminalState.currentCommand || '';
+          } else {
+            commandInput.value = terminalState.commandHistory[terminalState.historyIndex];
+          }
+          
+          // Move cursor to end of input
+          setTimeout(() => {
+            commandInput.selectionStart = commandInput.selectionEnd = commandInput.value.length;
+          }, 0);
+        }
+        event.preventDefault();
+      } else if (event.key === 'Tab') {
+        // Simple tab completion
+        event.preventDefault();
+        
+        const inputValue = commandInput.value;
+        const lastWord = inputValue.split(/\s+/).pop();
+        
+        // Complete commands
+        if (!inputValue.includes(' ')) {
+          const matches = Object.keys(commandDatabase).filter(cmd => 
+            cmd.startsWith(lastWord) && !cmd.includes(' ')
+          );
+          
+          if (matches.length === 1) {
+            commandInput.value = matches[0] + ' ';
+          }
+        } else {
+          // Path completion
+          const currentDir = getCurrentDirectory();
+          if (currentDir && currentDir.type === 'directory') {
+            const entries = Object.keys(currentDir.contents);
+            const matches = entries.filter(entry => entry.startsWith(lastWord));
+            
+            if (matches.length === 1) {
+              const match = matches[0];
+              const isDir = currentDir.contents[match].type === 'directory';
+              const completion = isDir ? match + '/' : match + ' ';
+              
+              // Replace the last word with the completion
+              const parts = inputValue.split(/\s+/);
+              parts[parts.length - 1] = completion;
+              commandInput.value = parts.join(' ');
+            }
+          }
+        }
+      }
+    });
+    
+    // Focus input when clicking on terminal
+    terminalContent.addEventListener('click', function() {
+      commandInput.focus();
+    });
+    
+    // Keep focus on input when terminal is active
+    setInterval(() => {
+      if (document.activeElement !== commandInput && 
+          !document.getElementById('terminal-playground').classList.contains('hidden')) {
+        commandInput.focus();
+      }
+    }, 1000);
+    
+    // Show welcome message
+    setTimeout(() => {
+      const welcomeMessage = document.createElement('div');
+      welcomeMessage.className = 'output-text whitespace-pre-line';
+      welcomeMessage.innerHTML = `<span class="text-rust font-medium">Welcome to Rustyll Interactive Terminal!</span>
+
+This is a simulated terminal environment where you can try Rustyll commands
+and explore a virtual filesystem.
+
+<span class="text-gray-400">• Use the up/down arrow keys to navigate command history</span>
+<span class="text-gray-400">• Tab key provides basic command/path completion</span>
+<span class="text-gray-400">• Type 'help' to see available commands</span>`;
+      commandHistory.appendChild(welcomeMessage);
+    }, 100);
+  }
+</script>
+
+<style>
+  .text-rust {
+    color: #d34516;
+  }
+  
+  .text-blue-400 {
+    color: #60a5fa;
+  }
+  
+  .text-gray-400 {
+    color: #9ca3af;
+  }
+  
+  .font-medium {
+    font-weight: 500;
+  }
+</style> 

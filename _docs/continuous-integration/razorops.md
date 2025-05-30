@@ -40,7 +40,7 @@ Whenever you make a push to the selected branch, your steps auto runs as defined
       # commands to build jekyll website
       - commands:
         - bundle install
-        - JEKYLL_ENV=production bundle exec jekyll build
+        - RUSTYLL_ENV=production bundle exec jekyll build
       # Commands to upload static pages folder to AWS S3 or ftp
       # Set AWS access key & secrets environment variables under 
       # Razorops dashboard project pipelines 

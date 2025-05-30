@@ -63,14 +63,14 @@ your posts
 with SEO
 
 To use these first you need to add them to your `Gemfile`. If you put them
-in a `jekyll_plugins` group they'll automatically be required into Jekyll:
+in a `rustyll_plugins` group they'll automatically be required into Jekyll:
 
 ```ruby
 source 'https://rubygems.org'
 
 gem "jekyll"
 
-group :jekyll_plugins do
+group :rustyll_plugins do
   gem "jekyll-sitemap"
   gem "jekyll-feed"
   gem "jekyll-seo-tag"
@@ -120,14 +120,14 @@ Sometimes you might want to output something in production but not
 in development. Analytics scripts are the most common example of this.
 
 To do this you can use [environments](/docs/configuration/environments/). You
-can set the environment by using the `JEKYLL_ENV` environment variable when
+can set the environment by using the `RUSTYLL_ENV` environment variable when
 running a command. For example:
 
 ```sh
-JEKYLL_ENV=production bundle exec jekyll build
+RUSTYLL_ENV=production bundle exec jekyll build
 ```
 
-By default `JEKYLL_ENV` is development. The `JEKYLL_ENV` is available to you
+By default `RUSTYLL_ENV` is development. The `RUSTYLL_ENV` is available to you
 in liquid using `jekyll.environment`. So to only output the analytics script
 on production you would do the following:
 
@@ -145,7 +145,7 @@ The final step is to get the site onto a production server. The most basic way
 to do this is to run a production build:
 
 ```sh
-JEKYLL_ENV=production bundle exec jekyll build
+RUSTYLL_ENV=production bundle exec jekyll build
 ```
 
 And then copy the contents of `_site` to your server.

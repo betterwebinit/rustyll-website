@@ -32,7 +32,7 @@
 
 - name: Environment
   description: Use a specific environment value in the build.
-  flag: JEKYLL_ENV=production
+  flag: RUSTYLL_ENV=production
 
 
 - name: Future
@@ -81,7 +81,7 @@
 
 - name: Log level
   description: Specify a log level among debug, info, warn, or error.
-  flag: JEKYLL_LOG_LEVEL=info
+  flag: RUSTYLL_LOG_LEVEL=info
 
 
 - name: Incremental build
@@ -96,8 +96,8 @@
 
 
 - name: Disable bundle require
-  description: Disables the need to require gems in `:jekyll_plugins` Gemfile
-  flag: JEKYLL_NO_BUNDLER_REQUIRE=true
+  description: Disables the need to require gems in `:rustyll_plugins` Gemfile
+  flag: RUSTYLL_NO_BUNDLER_REQUIRE=true
 
 
 - name: Liquid profiler

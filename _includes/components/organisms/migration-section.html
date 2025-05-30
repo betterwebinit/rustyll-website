@@ -19,23 +19,35 @@
 
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 lg:gap-6">
       <!-- Generator for all the cards -->
-      {% assign engines = "Jekyll:Ruby-based,Hugo:Go-based,Gatsby:React-based,11ty:JavaScript,Zola:Rust-based,MdBook:Rust-based,GitBook:JavaScript,MkDocs:Python-based,Docsy:Hugo theme,Slate:API docs,Bridgetown:Ruby/JS,Others:10+ more" | split: "," %}
+      {% assign engines = "Jekyll:Ruby-based,Hugo:Go-based,Gatsby:React-based,11ty:JavaScript,Zola:Rust-based,MdBook:Rust-based,GitBook:JavaScript,MkDocs:Python-based,Pelican:Python-based,Slate:API docs,Bridgetown:Ruby/JS,Others:10+ more" | split: "," %}
 
       {% for engine_info in engines %}
         {% assign engine_data = engine_info | split: ":" %}
         {% assign engine_name = engine_data[0] %}
         {% assign engine_desc = engine_data[1] %}
         {% assign animation_delay = forloop.index | times: 50 %}
-
+        {% if engine_name == "Others" %}
+          {% assign engine_icon = "" %}
+        {% else %}
+          {% assign engine_icon = engine_name | downcase | append: ".svg" %}
+        {% endif %}
+        {% if engine_name == "Others" %}
+          {% assign engine_link = '/docs/migrating/' %}
+        {% else %}
+          {% assign engine_link = '/docs/migrating/' | append: engine_name | downcase | append: '-to-rustyll/' %}
+        {% endif %}
+        <a href="{{ engine_link | relative_url }}">
         {% include components/molecules/migration-card.html
           name=engine_name
           description=engine_desc
-          delay=animation_delay %}
+          delay=animation_delay
+          icon=engine_icon %}
+        </a>
       {% endfor %}
     </div>
 
     <div class="text-center mt-16">
-      <a href="{{ '/docs/migrate/' | relative_url }}" class="inline-flex items-center px-8 py-4 rounded-xl bg-black/60 backdrop-blur-xl border border-rust/20 text-white hover:bg-black/80 transition-all duration-300 font-medium transform hover:translate-y-[-2px] shadow-lg shadow-rust/10 hover:shadow-rust/30 group overflow-hidden relative">
+      <a href="{{ '/docs/migrating/' | relative_url }}" class="inline-flex items-center px-8 py-4 rounded-xl bg-black/60 backdrop-blur-xl border border-rust/20 text-white hover:bg-black/80 transition-all duration-300 font-medium transform hover:translate-y-[-2px] shadow-lg shadow-rust/10 hover:shadow-rust/30 group overflow-hidden relative">
         <span class="relative z-10">Explore migration options</span>
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-rust/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
         <svg class="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300 relative z-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">

@@ -25,16 +25,283 @@
               </svg>
             </span>
           </a>
+          
+          <!-- Playground toggle button -->
+          {% include components/atoms/terminal-button.html
+            id="terminal-playground-toggle"
+            text="Try Interactive Terminal"
+            class="playground-toggle" %}
         </div>
       </div>
 
-      {% assign terminal_commands = "cargo install rustyll, rustyll new my-awesome-site, cd my-awesome-site, rustyll serve" | split: ", " %}
-      {% assign terminal_outputs = "," | split: "," | push: "," | push: "," | push: "# => Site running at http://localhost:4000" %}
-      
-      {% include components/molecules/terminal.html 
-        title="Rustyll Installation"
-        commands=terminal_commands
-        outputs=terminal_outputs %}
+      <!-- Terminal container with both viewer and playground -->
+      <div class="terminal-container perspective-1000 md:rotate-y-1 hover:rotate-y-0 transition-all duration-700">
+        <!-- Terminal commands and outputs configuration -->
+        {% assign terminal_commands = "cargo install rustyll,rustyll new my-awesome-site,cd my-awesome-site,rustyll serve" | split: "," %}
+        
+        {% assign install_output = "Updating crates.io index
+Downloading packages...
+Installing rustyll v1.2.0
+Finished installation in 2.4s" %}
+
+        {% assign new_site_output = "Creating new Rustyll site...
+Initializing project structure...
+Setting up default templates...
+Configuring site...
+Done! Your new site is ready." %}
+
+        {% assign cd_output = "" %}
+
+        {% assign serve_output = "=> Site running at http://localhost:4000" %}
+
+        {% assign terminal_outputs = "" | split: "," | push: install_output | push: new_site_output | push: cd_output | push: serve_output %}
+        
+        <!-- Terminal viewer (default visible) -->
+        {% include components/molecules/terminal-viewer.html 
+          title="Rustyll Installation"
+          commands=terminal_commands
+          outputs=terminal_outputs %}
+        
+        <!-- Terminal playground (initially hidden) -->
+        {% include components/molecules/terminal-playground.html 
+          title="Rustyll Interactive" %}
+      </div>
     </div>
   </div>
-</section> 
+  
+  <!-- Background grid for cyberpunk effect -->
+  <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+</section>
+
+<!-- Terminal global styles -->
+<style>
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .bg-grid-pattern {
+    background-image: 
+      linear-gradient(to right, rgba(211, 69, 22, 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(211, 69, 22, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  
+  .terminal-container {
+    position: relative;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+  }
+  
+  .terminal-container::before {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 20px;
+    background: radial-gradient(ellipse at center, rgba(211, 69, 22, 0.3) 0%, transparent 70%);
+    filter: blur(10px);
+    z-index: -1;
+  }
+  
+  /* Terminal window - Mac-like */
+  .terminal-window {
+    position: relative;
+    background: #000000;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(70, 70, 70, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transform: translateZ(0);
+    transition: all 0.3s ease;
+  }
+  
+  .terminal-window:hover {
+    border-color: rgba(100, 100, 100, 0.6);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Terminal header */
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #1c1c1c;
+    border-bottom: 1px solid #333;
+  }
+  
+  .terminal-buttons {
+    display: flex;
+    gap: 8px;
+    margin-right: 16px;
+  }
+  
+  .terminal-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+  }
+  
+  .terminal-button.red {
+    background: #ff5f56;
+    box-shadow: 0 0 4px rgba(255, 95, 86, 0.4);
+  }
+  
+  .terminal-button.yellow {
+    background: #ffbd2e;
+    box-shadow: 0 0 4px rgba(255, 189, 46, 0.4);
+  }
+  
+  .terminal-button.green {
+    background: #27c93f;
+    box-shadow: 0 0 4px rgba(39, 201, 63, 0.4);
+  }
+  
+  .terminal-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #d1d1d1;
+    font-size: 13px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Terminal content */
+  .terminal-content {
+    position: relative;
+    padding: 12px 16px;
+    font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    background: #000;
+    color: #f1f1f1;
+    overflow-y: auto;
+    height: 320px;
+    max-height: 70vh;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 100, 100, 0.3) rgba(0, 0, 0, 0.2);
+  }
+  
+  .terminal-content::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .terminal-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+  }
+  
+  .terminal-content::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 100, 100, 0.3);
+    border-radius: 3px;
+  }
+  
+  /* Scanlines effect */
+  .scanlines {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 50%,
+      rgba(0, 0, 0, 0.3) 51%
+    );
+    background-size: 100% 4px;
+    z-index: 2;
+    opacity: 0.08;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+  
+  /* Command and output styling */
+  .command-history {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .command-entry {
+    margin-bottom: 8px;
+    opacity: 1;
+  }
+  
+  .command-line {
+    display: flex;
+    white-space: pre-wrap;
+  }
+  
+  .prompt {
+    color: #8a8a8a;
+    margin-right: 8px;
+    user-select: none;
+  }
+  
+  .command-text {
+    color: #f1f1f1;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .output-text {
+    color: #b3b3b3;
+    margin-top: 2px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  
+  /* Interactive command input */
+  .interactive-prompt {
+    margin-top: 4px;
+  }
+  
+  .command-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #f1f1f1;
+    font-family: inherit;
+    font-size: inherit;
+    width: 100%;
+    caret-color: #f1f1f1;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Utility classes */
+  .hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Set up terminal mode toggle
+    const toggleButton = document.getElementById('terminal-playground-toggle');
+    const terminalViewer = document.getElementById('terminal-viewer');
+    const terminalPlayground = document.getElementById('terminal-playground');
+    
+    if (toggleButton && terminalViewer && terminalPlayground) {
+      toggleButton.addEventListener('click', function() {
+        const isPlaygroundActive = !terminalPlayground.classList.contains('hidden');
+        
+        if (isPlaygroundActive) {
+          // Switch to viewer mode
+          terminalPlayground.classList.add('hidden');
+          terminalViewer.classList.remove('hidden');
+          toggleButton.querySelector('span').textContent = 'Try Interactive Terminal';
+        } else {
+          // Switch to playground mode
+          terminalViewer.classList.add('hidden');
+          terminalPlayground.classList.remove('hidden');
+          toggleButton.querySelector('span').textContent = 'Back to Demo';
+          
+          // Focus the input field
+          setTimeout(() => {
+            document.getElementById('terminal-input').focus();
+          }, 100);
+        }
+      });
+    }
+  });
+</script> 

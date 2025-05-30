@@ -1,0 +1,111 @@
+{% comment %}
+  Terminal Viewer Molecule
+  @param commands - Array of terminal commands
+  @param outputs - Array of command outputs (optional)
+  @param title - Terminal title (optional)
+{% endcomment %}
+
+<div class="terminal-viewer" id="terminal-viewer">
+  <!-- Terminal window -->
+  <div class="terminal-window">
+    <!-- Include the terminal header atom -->
+    {% include components/atoms/terminal-header.html 
+      title=include.title %}
+    
+    <!-- Terminal content with scrollable area -->
+    <div class="terminal-content" id="terminal-viewer-content">
+      <!-- Scanlines overlay -->
+      <div class="scanlines"></div>
+      
+      <!-- Commands and outputs -->
+      <div class="command-history" id="terminal-viewer-history">
+        {% for command in include.commands %}
+          <div class="command-entry hidden" data-index="{{ forloop.index0 }}">
+            <!-- Include the command line atom -->
+            {% assign directory = forloop.index > 2 | if: "~/my-awesome-site", "~" %}
+            {% include components/atoms/terminal-command-line.html 
+              command=""
+              directory=directory %}
+            
+            {% if include.outputs[forloop.index0] and include.outputs[forloop.index0] != "" %}
+              <!-- Include the output atom -->
+              {% assign output = include.outputs[forloop.index0] %}
+              {% include components/atoms/terminal-output.html 
+                output=output %}
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    initTerminalViewer();
+  });
+  
+  function initTerminalViewer() {
+    const terminalContent = document.getElementById('terminal-viewer-content');
+    const commandEntries = document.querySelectorAll('#terminal-viewer-history .command-entry');
+    
+    // Sequential animation for typing each command
+    async function animateCommands() {
+      for (let i = 0; i < commandEntries.length; i++) {
+        const entry = commandEntries[i];
+        const commandText = entry.querySelector('.command-text');
+        const originalCommand = entry.getAttribute('data-command');
+        
+        // Display the entry
+        entry.classList.remove('hidden');
+        
+        // Type command character by character
+        await typeCommand(commandText, originalCommand);
+        
+        // Wait before showing next command
+        await sleep(800);
+        
+        // Scroll to bottom
+        terminalContent.scrollTop = terminalContent.scrollHeight;
+      }
+    }
+    
+    // Initialize commands and store original text
+    function initCommands() {
+      const commands = document.querySelectorAll('#terminal-viewer-history .command-line .command-text');
+      commands.forEach(command => {
+        const entry = command.closest('.command-entry');
+        entry.setAttribute('data-command', command.textContent);
+        command.textContent = '';
+      });
+    }
+    
+    // Function to type text character by character
+    function typeCommand(element, text) {
+      return new Promise(resolve => {
+        let index = 0;
+        function typeChar() {
+          if (index < text.length) {
+            element.textContent += text.charAt(index);
+            index++;
+            setTimeout(typeChar, Math.random() * 30 + 20);
+          } else {
+            resolve();
+          }
+        }
+        typeChar();
+      });
+    }
+    
+    // Helper function for async delay
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    
+    // Start the animation
+    initCommands();
+    setTimeout(() => {
+      animateCommands();
+    }, 500);
+  }
+</script> 

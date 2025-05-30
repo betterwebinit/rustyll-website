@@ -1,6 +1,7 @@
 {% comment %}
   Migration card component
   @param name - Engine name
+  @param icon - Engine icon
   @param description - Engine description
   @param delay - Animation delay
 {% endcomment %}
@@ -10,11 +11,15 @@
     <div class="absolute inset-0 bg-rust/20 rounded-xl blur-md group-hover:bg-rust/30 transition-all duration-500"></div>
     <div class="relative p-5 rounded-xl border border-rust/10 bg-black/60 backdrop-blur-xl hover:bg-black/70 transition-all duration-300 flex flex-col items-center text-center h-full group-hover:border-rust/30">
       <div class="w-12 h-12 rounded-full bg-gradient-to-br from-rust/20 to-black/80 flex items-center justify-center mb-4 group-hover:bg-rust/20 transition-colors duration-300 border border-rust/30 shadow-lg shadow-rust/5">
-        <svg class="w-6 h-6 text-rust" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        {% if include.icon and include.icon != "" %}
+          <img src="/img/migration/{{ include.icon }}" alt="{{ include.name }}" class="w-8 h-8">
+        {% else  %}
+          <svg class="w-6 h-6 text-rust" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect width="18" height="18" x="3" y="3" rx="2" />
           <circle cx="9" cy="9" r="2" />
           <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
         </svg>
+        {% endif %}
       </div>
       <h3 class="font-medium text-white mb-1 text-lg">{{ include.name }}</h3>
       <p class="text-xs text-gray-300">{{ include.description }}</p>

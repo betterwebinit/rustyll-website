@@ -2,54 +2,507 @@
   Terminal component
   @param commands - Array of terminal commands
   @param outputs - Array of command outputs (optional)
+  @param title - Terminal title (optional, defaults to "Rustyll Installation")
 {% endcomment %}
 
-<div class="relative" data-aos="fade-left">
-  <!-- Terminal enhanced glow effect -->
-  <div class="absolute inset-0 bg-rust/30 rounded-2xl blur-2xl animate-pulse-slow"></div>
-
-  <div class="relative bg-black/90 rounded-2xl overflow-hidden border border-rust/20 shadow-2xl backdrop-blur-xl transform perspective-1000 rotate-y-[-2deg] hover:rotate-y-0 transition-transform duration-700">
-    <div class="bg-gradient-to-r from-black/95 to-black/90 px-4 py-3 border-b border-rust/20 flex items-center">
-      <div class="flex space-x-1.5 mr-4">
-        <div class="w-3 h-3 rounded-full bg-red-500 shadow-glow-sm-red"></div>
-        <div class="w-3 h-3 rounded-full bg-yellow-500 shadow-glow-sm-yellow"></div>
-        <div class="w-3 h-3 rounded-full bg-green-500 shadow-glow-sm-green"></div>
+<div class="retro-terminal-container" data-aos="fade-up">
+  <!-- Main terminal window -->
+  <div class="terminal-window">
+    <!-- Terminal header (Mac style) -->
+    <div class="terminal-header">
+      <div class="terminal-buttons">
+        <div class="terminal-button red"></div>
+        <div class="terminal-button yellow"></div>
+        <div class="terminal-button green"></div>
       </div>
-      <div class="flex items-center">
-        <div class="w-1 h-4 bg-rust mr-2 animate-blink"></div>
-        <p class="text-gray-300 font-mono text-sm">{{ include.title | default: "Terminal" }}</p>
-      </div>
-      <div class="ml-auto flex items-center space-x-2">
-        <div class="w-2 h-2 rounded-full bg-rust animate-ping"></div>
-        <p class="text-gray-400 font-mono text-xs">Connected</p>
+      <div class="terminal-title">
+        <span>{{ include.title | default: "Rustyll Installation" }}</span>
       </div>
     </div>
-    <div class="p-6 font-mono text-sm bg-gradient-to-br from-black/95 to-black/90">
-      {% for command in include.commands %}
-        <p class="pb-1 flex typing-animation" {% if forloop.index > 1 %}style="animation-delay: {{ forloop.index }}s"{% endif %}>
-          <span class="text-gray-500 flex-shrink-0">{% if forloop.index > 2 %}~/my-awesome-site{% else %}~{% endif %}</span>
-          <span class="text-rust mr-2">$</span>
-          <span class="text-gray-200">{{ command }}</span>
-        </p>
-        {% if include.outputs[forloop.index0] %}
-          <p class="text-green-400 typing-animation" style="animation-delay: {{ forloop.index | plus: 1 }}s">
-            {{ include.outputs[forloop.index0] }}
-          </p>
-        {% endif %}
-      {% endfor %}
-      <div class="flex items-center mt-1 cursor-typing">
-        <span class="text-gray-500 flex-shrink-0">{% if include.commands.size > 2 %}~/my-awesome-site{% else %}~{% endif %}</span>
-        <span class="text-rust mr-2">$</span>
-        <span class="w-3 h-5 bg-gray-300 animate-pulse"></span>
+    
+    <!-- Terminal content with scrollable area -->
+    <div class="terminal-content" id="terminal-content">
+      <!-- Scanlines overlay -->
+      <div class="scanlines"></div>
+      
+      <!-- Commands and outputs -->
+      <div class="command-history" id="command-history">
+        {% for command in include.commands %}
+          <div class="command-entry hidden" data-index="{{ forloop.index0 }}">
+            <div class="command-line">
+              <span class="prompt">{% if forloop.index > 2 %}~/my-awesome-site{% else %}~{% endif %}$</span>
+              <span class="command-text"></span>
+              <span class="original-command hidden">{{ command }}</span>
+            </div>
+            
+            {% if include.outputs[forloop.index0] and include.outputs[forloop.index0] != "" %}
+              <div class="output-text whitespace-pre-line">{{ include.outputs[forloop.index0] }}</div>
+            {% endif %}
+          </div>
+        {% endfor %}
       </div>
-    </div>
-
-    <!-- Holographic effect -->
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute inset-y-0 left-0 w-[1px] bg-gradient-to-b from-transparent via-rust/30 to-transparent"></div>
-      <div class="absolute inset-y-0 right-0 w-[1px] bg-gradient-to-b from-transparent via-rust/30 to-transparent"></div>
-      <div class="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-rust/30 to-transparent"></div>
-      <div class="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-rust/30 to-transparent"></div>
+      
+      <!-- Interactive command prompt -->
+      <div class="interactive-prompt hidden" id="interactive-prompt">
+        <div class="flex items-start">
+          <span class="prompt">~/my-awesome-site$</span>
+          <input type="text" class="command-input" id="command-input" autocomplete="off" spellcheck="false">
+        </div>
+      </div>
     </div>
   </div>
-</div> 
+</div>
+
+<style>
+  /* Terminal container */
+  .retro-terminal-container {
+    position: relative;
+    margin: 1rem 0;
+  }
+  
+  /* Main terminal window - more Mac-like */
+  .terminal-window {
+    position: relative;
+    background: #000000;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(70, 70, 70, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transform: translateZ(0);
+    transition: all 0.3s ease;
+  }
+  
+  .terminal-window:hover {
+    border-color: rgba(100, 100, 100, 0.6);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Terminal header - Mac style */
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #1c1c1c;
+    border-bottom: 1px solid #333;
+  }
+  
+  .terminal-buttons {
+    display: flex;
+    gap: 8px;
+    margin-right: 16px;
+  }
+  
+  .terminal-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+  }
+  
+  .terminal-button.red {
+    background: #ff5f56;
+    box-shadow: 0 0 4px rgba(255, 95, 86, 0.4);
+  }
+  
+  .terminal-button.yellow {
+    background: #ffbd2e;
+    box-shadow: 0 0 4px rgba(255, 189, 46, 0.4);
+  }
+  
+  .terminal-button.green {
+    background: #27c93f;
+    box-shadow: 0 0 4px rgba(39, 201, 63, 0.4);
+  }
+  
+  .terminal-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #d1d1d1;
+    font-size: 13px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Terminal content */
+  .terminal-content {
+    position: relative;
+    padding: 12px 16px;
+    font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    background: #000;
+    color: #f1f1f1;
+    overflow-y: auto;
+    height: 320px;
+    max-height: 70vh;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 100, 100, 0.3) rgba(0, 0, 0, 0.2);
+  }
+  
+  .terminal-content::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .terminal-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+  }
+  
+  .terminal-content::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 100, 100, 0.3);
+    border-radius: 3px;
+  }
+  
+  /* Scanlines effect */
+  .scanlines {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 50%,
+      rgba(0, 0, 0, 0.3) 51%
+    );
+    background-size: 100% 4px;
+    z-index: 2;
+    opacity: 0.08;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+  
+  /* Command and output styling */
+  .command-history {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .command-entry {
+    margin-bottom: 8px;
+    opacity: 1;
+  }
+  
+  .command-line {
+    display: flex;
+    white-space: pre-wrap;
+  }
+  
+  .prompt {
+    color: #8a8a8a;
+    margin-right: 8px;
+    user-select: none;
+  }
+  
+  .command-text {
+    color: #f1f1f1;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .output-text {
+    color: #b3b3b3;
+    margin-top: 2px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  
+  /* Interactive command input */
+  .interactive-prompt {
+    margin-top: 4px;
+  }
+  
+  .command-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #f1f1f1;
+    font-family: inherit;
+    font-size: inherit;
+    width: 100%;
+    caret-color: #f1f1f1;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Utility classes */
+  .hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const terminalContent = document.getElementById('terminal-content');
+    const commandHistory = document.getElementById('command-history');
+    const interactivePrompt = document.getElementById('interactive-prompt');
+    const commandInput = document.getElementById('command-input');
+    const commandEntries = document.querySelectorAll('.command-entry');
+    
+    // Command database
+    const commandDatabase = {
+      // rustyll main commands
+      "rustyll": {
+        description: "Static site generator",
+        subcommands: ["build", "serve", "new", "help"]
+      },
+      "clear": {
+        description: "Clear the terminal screen",
+        action: function() {
+          const allEntries = commandHistory.querySelectorAll('.command-entry:not(.hidden)');
+          allEntries.forEach(entry => entry.classList.add('hidden'));
+          return "";
+        }
+      },
+      "help": {
+        description: "Display help information",
+        action: function() {
+          return `Available commands:
+  rustyll build     - Build your site
+  rustyll serve     - Serve your site locally
+  rustyll new       - Create a new Rustyll site
+  rustyll help      - Show help for commands
+  clear             - Clear the terminal screen
+  
+For more details, try 'rustyll help [command]'`;
+        }
+      },
+      
+      // rustyll subcommands
+      "rustyll build": {
+        description: "Build your site",
+        options: [
+          "-w, --watch", "--config FILE", "-p, --plugins DIR", "--layouts DIR",
+          "-D, --drafts", "--future", "--unpublished", "--lsi", "--limit_posts NUM",
+          "--force_polling", "-V, --verbose", "-q, --quiet", "-I, --incremental",
+          "--profile", "--strict_front_matter"
+        ],
+        action: function() {
+          return "Building site...\nDone! 42 files generated in 0.6 seconds.";
+        }
+      },
+      "rustyll serve": {
+        description: "Serve your site locally",
+        options: [
+          "-P, --port PORT", "-H, --host HOSTNAME", "-l, --livereload",
+          "--livereload-ignore GLOB", "--livereload-min-delay SECONDS",
+          "--livereload-max-delay SECONDS", "--livereload-port PORT",
+          "-o, --open-url", "-B, --detach", "--skip-initial-build",
+          "--show-dir-listing", "--ssl-key", "--ssl-cert"
+        ],
+        action: function() {
+          return "Starting server...\n=> Server running at http://localhost:4000";
+        }
+      },
+      "rustyll new": {
+        description: "Create a new Rustyll site",
+        options: ["--blank", "--force"],
+        action: function(args) {
+          const siteName = args[0] || "my-site";
+          return `Creating new site at ${siteName}...
+          
+Done! New site created at ${siteName}
+To start your site, run:
+  cd ${siteName}
+  rustyll serve`;
+        }
+      },
+      "rustyll help": {
+        description: "Show help for commands",
+        action: function(args) {
+          const command = args[0];
+          
+          if (!command) {
+            return `Rustyll is a static site generator
+            
+Basic Usage:
+  rustyll build                   - Build your site
+  rustyll serve                   - Serve your site locally
+  rustyll new <PATH>              - Creates a new site with default content
+  rustyll help                    - Show help
+  rustyll help <command>          - Show help for specific command`;
+          }
+          
+          const cmdKey = "rustyll " + command;
+          const cmd = commandDatabase[cmdKey];
+          
+          if (cmd) {
+            let output = `rustyll ${command} - ${cmd.description}\n\nOptions:`;
+            if (cmd.options && cmd.options.length > 0) {
+              cmd.options.forEach(opt => {
+                output += `\n  ${opt}`;
+              });
+            } else {
+              output += "\n  No specific options";
+            }
+            
+            // Add global options
+            output += "\n\nGlobal Options:";
+            output += "\n  -s, --source DIR                 Change the directory where Rustyll will read files";
+            output += "\n  -d, --destination DIR            Change the directory where Rustyll will write files";
+            output += "\n  --safe                           Disable non-whitelisted plugins and caching";
+            
+            return output;
+          } else {
+            return `Unknown command: ${command}\nTry 'rustyll help' for a list of commands`;
+          }
+        }
+      }
+    };
+    
+    // Typing animation
+    function typeCommand(commandElement, text, index = 0) {
+      return new Promise(resolve => {
+        if (index < text.length) {
+          commandElement.textContent += text.charAt(index);
+          const delay = Math.random() * 30 + 20; // Random delay for natural typing
+          setTimeout(() => {
+            typeCommand(commandElement, text, index + 1).then(resolve);
+          }, delay);
+        } else {
+          resolve();
+        }
+      });
+    }
+    
+    // Show terminal entry with typing animation
+    async function showEntry(entry, index) {
+      // Make entry visible
+      entry.classList.remove('hidden');
+      
+      // Get command element and original command text
+      const commandTextElement = entry.querySelector('.command-text');
+      const originalCommand = entry.querySelector('.original-command').textContent;
+      
+      // Type command
+      await typeCommand(commandTextElement, originalCommand);
+      
+      // Pause briefly
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      // Scroll to bottom
+      terminalContent.scrollTop = terminalContent.scrollHeight;
+      
+      // Process next entry after a short delay
+      if (index < commandEntries.length - 1) {
+        setTimeout(() => {
+          showEntry(commandEntries[index + 1], index + 1);
+        }, 800);
+      } else {
+        // Show interactive prompt when all predefined commands are displayed
+        setTimeout(() => {
+          interactivePrompt.classList.remove('hidden');
+          commandInput.focus();
+        }, 500);
+      }
+    }
+    
+    // Process user command
+    function processCommand(command) {
+      // Create new command entry
+      const entry = document.createElement('div');
+      entry.className = 'command-entry';
+      
+      // Command line
+      const commandLine = document.createElement('div');
+      commandLine.className = 'command-line';
+      
+      const prompt = document.createElement('span');
+      prompt.className = 'prompt';
+      prompt.textContent = '~/my-awesome-site$';
+      
+      const commandText = document.createElement('span');
+      commandText.className = 'command-text';
+      commandText.textContent = command;
+      
+      commandLine.appendChild(prompt);
+      commandLine.appendChild(commandText);
+      entry.appendChild(commandLine);
+      
+      // Process command and generate output
+      let output = '';
+      const args = command.trim().split(/\s+/);
+      const baseCommand = args[0];
+      
+      if (commandDatabase[command]) {
+        // Direct command match
+        const cmd = commandDatabase[command];
+        if (typeof cmd.action === 'function') {
+          output = cmd.action(args.slice(1));
+        }
+      } else if (baseCommand === 'rustyll') {
+        // Handle rustyll subcommands
+        const subCommand = args[1];
+        const subCommandKey = `rustyll ${subCommand}`;
+        
+        if (commandDatabase[subCommandKey]) {
+          const cmd = commandDatabase[subCommandKey];
+          if (typeof cmd.action === 'function') {
+            output = cmd.action(args.slice(2));
+          }
+        } else {
+          output = `Unknown rustyll command: ${subCommand}\nTry 'rustyll help' for a list of commands`;
+        }
+      } else if (baseCommand === 'clear') {
+        // Handle clear command
+        if (commandDatabase.clear && typeof commandDatabase.clear.action === 'function') {
+          output = commandDatabase.clear.action();
+        }
+      } else if (baseCommand === 'help') {
+        // Handle help command
+        if (commandDatabase.help && typeof commandDatabase.help.action === 'function') {
+          output = commandDatabase.help.action(args.slice(1));
+        }
+      } else {
+        output = `Command not found: ${baseCommand}\nTry 'help' for a list of commands`;
+      }
+      
+      // Add output if any
+      if (output) {
+        const outputElement = document.createElement('div');
+        outputElement.className = 'output-text whitespace-pre-line';
+        outputElement.textContent = output;
+        entry.appendChild(outputElement);
+      }
+      
+      // Add to command history
+      commandHistory.appendChild(entry);
+      
+      // Scroll to bottom and reset input
+      setTimeout(() => {
+        terminalContent.scrollTop = terminalContent.scrollHeight;
+        commandInput.value = '';
+      }, 10);
+    }
+    
+    // Set up command input handling
+    commandInput.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        const command = commandInput.value.trim();
+        if (command) {
+          processCommand(command);
+        }
+      }
+    });
+    
+    // Focus input when clicking on terminal
+    terminalContent.addEventListener('click', function() {
+      if (!interactivePrompt.classList.contains('hidden')) {
+        commandInput.focus();
+      }
+    });
+    
+    // Start the initial command sequence
+    if (commandEntries.length > 0) {
+      showEntry(commandEntries[0], 0);
+    } else {
+      interactivePrompt.classList.remove('hidden');
+    }
+    
+    // Add cursor blinking
+    setInterval(() => {
+      if (document.activeElement !== commandInput) {
+        commandInput.focus();
+      }
+    }, 3000);
+  });
+</script> 
