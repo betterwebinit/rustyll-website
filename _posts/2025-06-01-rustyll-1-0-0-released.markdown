@@ -1,7 +1,7 @@
 ---
 title: "Rustyll 1.0.0 Released"
-date: "2023-05-06 02:12:52 +0200"
-author: rustyllteam
+date: "2025-06-01 12:00:00 +0300"
+author: matbrgz
 version: 1.0.0
 category: release
 ---
