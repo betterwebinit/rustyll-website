@@ -3,7 +3,7 @@
   @param classes - Additional CSS classes
 {% endcomment %}
 
-{% assign edit_url = site.repository | append: "/blob/master/" | append: site.source | append: "/" | append: page.path %}
+{% assign edit_url = site.website_repository | append: "/edit/" | append: site.site_branch | append: "/" | append: page.path %}
 
 <a href="{{ edit_url }}" 
    target="_blank" 

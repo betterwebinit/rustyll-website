@@ -1,4 +1,5 @@
 ---
+published: false
 title: "Releasing a new version"
 ---
 

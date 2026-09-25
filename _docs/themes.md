@@ -261,4 +261,4 @@ Rustyll themes include special performance optimizations when built as crates, e
 - Asset fingerprinting and optimization
 - Memory-efficient resource handling
 
-For more details, see the [Theme Development Guide]({{ '/docs/themes/development/' | relative_url }}).
+For more details, see the Theme Development Guide (guide not yet available).

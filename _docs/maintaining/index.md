@@ -1,22 +1,16 @@
 ---
-title: Maintaining Jekyll
+title: Maintaining Rustyll
 permalink: /docs/maintaining/
+description: How to contribute to and help maintain the Rustyll project.
 ---
 
-**This guide is for Jekyll contributors and maintainers.** These special people contribute to one or more of Jekyll's repositories or help merge the contributions of others. You may find what is written here interesting, but it’s definitely not for everyone.
-{: .note .info}
+Rustyll is developed in the open. If you want to help maintain it, begin with the current [contribution guide]({{ '/docs/contributing/' | relative_url }}) and the [product repository](https://github.com/betterwebinit/rustyll). Review active issues and pull requests before assuming a workflow or label is still in use.
 
-Hello! This is where we document various processes for maintaining Jekyll. Being a maintainer for any Jekyll project is a big responsibility, so we put together some helpful documentation for various tasks you might do as a maintainer.
+## Ways to help
 
-- [Affinity teams & their captains](affinity-team-captain/)
-- [Triaging an issue](triaging-an-issue/)
-- [Reviewing a pull request](reviewing-a-pull-request/)
-- [Merging a pull request](merging-a-pull-request/)
-- [Avoiding burnout](avoiding-burnout/)
-- [Special Labels](special-labels/)
-- [Releasing a new version](releasing-a-new-version/)
-- [Releasing a new version off `*-stable` branches](releasing-off-stable-branches/)
+- Improve the documentation when you find a gap or a broken example.
+- Report bugs with a small reproduction and the Rustyll version you used.
+- Review changes in the project repository and discuss tradeoffs with contributors.
+- Follow the [security policy]({{ '/docs/security/' | relative_url }}) for security concerns.
 
-Interested in becoming a maintainer? Here is some documentation for **contributors**:
-
-- [Becoming a maintainer](becoming-a-maintainer/)
+Detailed maintainer procedures inherited from Jekyll are held as unpublished drafts until the Rustyll process is verified with project maintainers.

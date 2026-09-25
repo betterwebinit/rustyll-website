@@ -2,13 +2,5 @@
 layout: news
 title: News
 permalink: /news/
-author: all
+description: Rustyll project updates and release notes.
 ---
-
-{% for post in site.posts -%}
-  {% if forloop.index == 1 -%}
-    {% include news_item.html -%}
-  {% else -%}
-    {% include news_item_archive.html -%}
-  {% endif -%}
-{% endfor -%}

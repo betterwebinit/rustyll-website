@@ -1,32 +1,29 @@
-# Rustyll docs site
+# Rustyll website
 
-This directory contains the code for the Rustyll docs site, [rustyll.org](https://rustyll.org/).
+Source for [rustyll.better-web.org](https://rustyll.better-web.org). The site is built with Jekyll and uses compiled Tailwind CSS plus the authored styles in `assets/css/site.css`.
 
-## Contributing
+## Run locally
 
-For information about contributing, see the [Contributing page](https://rustyll.org/docs/contributing/).
+Install Node.js and Ruby/Bundler, then run:
 
-## Running locally
+```sh
+npm ci
+BUNDLE_PATH=vendor/bundle bundle install
+npm run dev
+```
 
-You can preview your contributions before opening a pull request by running from within the directory:
+Open [http://127.0.0.1:4001](http://127.0.0.1:4001). Port 4001 avoids collisions with other local sites. The Jekyll server watches source files; rerun `npm run build:css` after changing Tailwind classes.
 
-1. `cd docs`
-2. `rustyll serve --watch`
+## Verify changes
 
-It's just a Rustyll site, after all! :rocket:
+```sh
+npm run build
+npm run check:links
+npm test
+```
 
-## Performance
+The browser tests use a local server and Google Chrome. They check all published HTML pages at mobile, tablet and desktop widths, plus search, menus, terminal, tutorial progress and representative accessibility checks.
 
-Rustyll is blazing fast compared to Jekyll:
+## Design and content
 
-- Builds are 10-100x faster
-- Parallel processing with all available CPU cores
-- Incremental builds for quick iterations
-- Aggressive caching for even better performance
-
-## Updating Font Awesome
-
-1. Go to <https://icomoon.io/app/>
-2. Choose Import Icons and load `icomoon-selection.json`
-3. Choose Generate Font → Download
-4. Copy the font files and adapt the CSS to the paths we use in Rustyll
+See [the design system](maintenance/design-system.md) for tokens and page patterns. The public product version in `_config.yml` should match the [latest published Rustyll release](https://github.com/betterwebinit/rustyll/releases); update it and release news together. See [the editorial audit](maintenance/editorial-audit.md) before republishing historical claims, case studies or talks.

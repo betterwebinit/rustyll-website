@@ -1,0 +1,1 @@
+{% assign steps = site.docs | where: 'layout', 'step' | sort: 'position' %}<nav class="docs-links" aria-label="Step by step tutorial"><h2>Your first Rustyll site</h2><ul>{% for step in steps %}<li><a href="{{ step.url | relative_url }}" {% if step.url == page.url %}aria-current="page"{% endif %}>{{ step.position }}. {{ step.title }}</a></li>{% endfor %}</ul></nav>

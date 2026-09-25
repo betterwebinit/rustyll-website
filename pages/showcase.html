@@ -1,33 +1,15 @@
 ---
 layout: page
-title: Showcase
+title: Community showcase
 permalink: /showcase/
+description: A place for real projects built with Rustyll.
 redirect_from:
   - /docs/sites/
 ---
-
-<div class="mb-8">
-  <p class="text-lg text-gray-300">Rustyll powers many company websites; here are a few notable examples:</p>
-</div>
-
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-  {% for entry in site.data.showcase reversed -%}
-  <div class="bg-black/20 rounded-lg overflow-hidden border border-gray-800 hover:border-rust/30 hover:shadow-md transition group">
-    <a href="{{ entry.url }}" target="_blank" rel="noopener" class="block h-full">
-      <div class="aspect-w-16 aspect-h-10 overflow-hidden">
-        <img 
-          loading="lazy" 
-          src="{{ site.cloudinary_url }}/showcase/{{ entry.image }}" 
-          alt="{{ entry.name }}" 
-          width="404" 
-          height="253"
-          class="w-full h-full object-cover transform group-hover:scale-105 transition duration-300"
-        >
-      </div>
-      <div class="p-4">
-        <h3 class="text-lg font-medium text-white group-hover:text-rust transition">{{ entry.name }}</h3>
-      </div>
-    </a>
-  </div>
-  {% endfor -%}
-</div>
+{% assign projects = site.data.showcase | where: 'verified', true %}
+{% if projects.size > 0 %}
+<div class="showcase-grid">{% for entry in projects %}<a class="showcase-card" href="{{ entry.url }}"><div class="showcase-preview">{% if entry.image %}<img data-preview src="{{ entry.image | relative_url }}" alt="Preview of {{ entry.name | escape }}" width="600" height="375" loading="lazy">{% else %}<span>{{ entry.name }}</span>{% endif %}</div><h2>{{ entry.name }}</h2><p>{{ entry.description }}</p><span class="text-rust">Visit project ↗</span></a>{% endfor %}</div>
+{% else %}
+<section class="showcase-invitation"><div><span class="eyebrow">MADE BY THE COMMUNITY</span><h2>Every site starts somewhere.<br><span>Show us yours.</span></h2><p>Built a site with Rustyll? Share a link, a screenshot and a few words about the project. Verified submissions can help others see what is possible.</p><a class="site-button site-button--primary" href="{{ site.website_repository }}/issues/new?title=Showcase%20submission">Submit your site ↗</a></div><div class="showcase-illustration" aria-hidden="true"><div class="showcase-mini-window"><span class="mini-window-top"><i></i><i></i><i></i> YOUR NEXT SITE</span><span class="mini-window-page"><b></b><b></b><b></b></span></div><span class="showcase-orbit">✦</span></div></section>
+<div class="showcase-pointers"><div><span>01 / LINK</span><h2>Share the live site</h2><p>Let people explore what you made.</p></div><div><span>02 / CONTEXT</span><h2>Tell the story</h2><p>Describe the site and how you used Rustyll.</p></div><div><span>03 / IMAGE</span><h2>Add a preview</h2><p>A screenshot helps visitors recognize the project.</p></div></div>
+{% endif %}
