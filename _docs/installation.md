@@ -4,7 +4,7 @@ description: Official guide to install Rustyll on macOS, GNU/Linux or Windows.
 permalink: /docs/installation/
 ---
 
-Rustyll is a [Rust Crate]({{ '/docs/rust-101/#crates' | relative_url }}) that can be installed on most systems. As a compiled language, Rust offers significant performance advantages over Ruby, resulting in Rustyll's 10-100x faster build times compared to Jekyll.
+Rustyll is a [Rust Crate]({{ '/docs/rust-101/' | relative_url }}) that can be installed on most systems. As a compiled language, Rust offers significant performance advantages over Ruby, resulting in Rustyll's 10-100x faster build times compared to Jekyll.
 
 ## Requirements
 

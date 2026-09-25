@@ -131,7 +131,7 @@ rustyll benchmark --plugin rustyll-your-plugin
 
 This will measure plugin performance across various metrics and suggest optimizations.
 
-For more details about creating plugins, see the [Plugin System]({{ '/docs/plugins/creating/' | relative_url }}) documentation.
+For more details about creating plugins, see the [Plugin System]({{ '/docs/plugins/your-first-plugin/' | relative_url }}) documentation.
 
 ## Advanced Plugin Features
 

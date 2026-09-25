@@ -19,7 +19,7 @@
   
   <!-- Progress bar -->
   <div class="mt-6 bg-black/30 rounded-full h-2 overflow-hidden">
-    {% assign step_count = site.tutorials | where: "type", "step" | size %}
+    {% assign step_count = site.docs | where: "layout", "step" | size %}
     {% if step_count > 0 %}
       {% assign progress_percentage = page.position | times: 100 | divided_by: step_count %}
       <div class="bg-gradient-to-r from-rust to-rust-light h-full rounded-full" style="width: {{ progress_percentage }}%;"></div>

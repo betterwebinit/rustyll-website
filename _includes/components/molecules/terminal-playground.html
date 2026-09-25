@@ -24,7 +24,7 @@
       <div class="interactive-prompt" id="terminal-prompt">
         <div class="flex items-start">
           <span class="prompt" id="terminal-prompt-text">~/my-awesome-site$</span>
-          <input type="text" class="command-input" id="terminal-input" autocomplete="off" spellcheck="false" placeholder="Type a command (try 'help')">
+          <input type="text" class="command-input" id="terminal-input" aria-label="Type a simulated terminal command" autocomplete="off" spellcheck="false" placeholder="Type a command (try 'help')">
         </div>
       </div>
     </div>
@@ -609,11 +609,12 @@ For more details, try 'help [command]' or 'rustyll help [command]'`;
         output = `Command not found: ${baseCommand}\nTry 'help' for a list of commands`;
       }
       
-      // Add output if any and the clear command didn't clear the history
-      if (output && commandHistory.children.length > 0) {
+      // Always show command output, including before the welcome message arrives.
+      if (output) {
         const outputElement = document.createElement('div');
         outputElement.className = 'output-text whitespace-pre-line';
-        outputElement.innerHTML = output; // Allow HTML in output for colorization
+        // Commands can contain user text, so render their output as plain text.
+        outputElement.textContent = output.replace(/<span class="text-blue-400">([^<]*)<\/span>/g, '$1');
         commandEntry.appendChild(outputElement);
       }
       
@@ -713,14 +714,6 @@ For more details, try 'help [command]' or 'rustyll help [command]'`;
       commandInput.focus();
     });
     
-    // Keep focus on input when terminal is active
-    setInterval(() => {
-      if (document.activeElement !== commandInput && 
-          !document.getElementById('terminal-playground').classList.contains('hidden')) {
-        commandInput.focus();
-      }
-    }, 1000);
-    
     // Show welcome message
     setTimeout(() => {
       const welcomeMessage = document.createElement('div');
@@ -754,4 +747,4 @@ and explore a virtual filesystem.
   .font-medium {
     font-weight: 500;
   }
-</style> 
+</style>

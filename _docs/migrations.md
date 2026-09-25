@@ -143,7 +143,7 @@ When migrating from Jekyll to Rustyll, you'll experience immediate performance i
 
 2. **Plugin Dependencies**: Some Jekyll plugins may not have Rustyll equivalents. Run `rustyll doctor` to get a compatibility report.
 
-3. **Custom Generators**: Jekyll custom generators need to be rewritten for Rustyll. See our [plugin migration guide]({{ '/docs/plugins/migration/' | relative_url }}).
+3. **Custom Generators**: Jekyll custom generators need to be rewritten for Rustyll. See our plugin migration guide (guide not yet available).
 
 ### Migration Validation
 

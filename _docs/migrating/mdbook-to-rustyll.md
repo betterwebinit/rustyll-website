@@ -131,22 +131,24 @@ Rustyll provides equivalents for mdBook's features:
 
 ### Code Block Conversion
 
-mdBook's code blocks with annotations convert to Rustyll format:
+An mdBook code block can contain Rust-specific annotations:
 
-```markdown
-# mdBook
+````markdown
 ```rust,edition2021,should_panic
 fn main() {
     panic!("This will panic");
 }
 ```
+````
 
-# Rustyll
+The equivalent code display in a Rustyll Markdown page uses a Rust code fence:
+
+````markdown
 ```rust
 fn main() {
     panic!("This will panic");
 }
 ```
+````
 
-# Rustyll
-{% raw %}`{% include note.html title="Note Title" content="This is a note" %}`{% endraw %}
+A code fence displays source code; it does not execute the Rust example.
