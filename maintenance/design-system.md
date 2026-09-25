@@ -29,6 +29,8 @@ Calculated contrast: orange against background 9.45:1, orange against surface 8.
 | Pattern | Classes/components | Interaction |
 | --- | --- | --- |
 | Primary/secondary action | `.site-button--primary`, `.site-button--secondary` | Hover shade/border and visible focus |
+| Shared header | `_includes/components/organisms/header.html` | Better Web dark chrome, Rustyll rocket, orange start action, accessible search and mobile menu |
+| Shared footer | `_includes/components/organisms/footer.html` | Better Web update band and three-column layout, with working RSS and release links |
 | Editorial cards | `.resource-feature`, `.participation-card`, `.learning-paths a` | Whole card is a link; keyboard focus remains visible |
 | Search | `#search-dialog`, `[data-search-surface]` | Cmd/Ctrl+K, Escape, results, empty and error states |
 | Documentation | `.docs-grid`, `.mobile-docs`, `.page-toc` | Sidebar on desktop, disclosure on mobile |
