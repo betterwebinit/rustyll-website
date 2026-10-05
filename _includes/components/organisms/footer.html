@@ -1,79 +1,43 @@
-{% comment %}
-  Footer organism component
-{% endcomment %}
-
-<footer class="bg-black py-12 border-t border-rust/20 relative overflow-hidden">
-  <!-- Background effect -->
-  <div class="absolute inset-0 bg-gradient-to-b from-black to-black/90"></div>
-  <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-rust/30 to-transparent"></div>
-  <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-rust/5 rounded-full blur-3xl"></div>
-  <div class="absolute -top-20 -right-20 w-60 h-60 bg-rust/5 rounded-full blur-3xl"></div>
-  
-  <div class="container mx-auto px-4 relative z-10">
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 mb-8">
-      <!-- Main info column -->
-      <div class="md:col-span-5">
-        {% include components/molecules/footer-main.html %}
-      </div>
-      
-      <!-- Links columns -->
-      <div class="md:col-span-2">
-        {% include components/molecules/footer-links.html title="Resources" %}
-      </div>
-      
-      <div class="md:col-span-2">
-        {% include components/molecules/footer-links.html title="About" %}
-      </div>
-      
-      <div class="md:col-span-3">
-        <div class="space-y-6">
-          {% include components/molecules/footer-links.html title="Community" %}
-          {% include components/molecules/footer-meta.html classes="mt-8" %}
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-updates">
+        <div>
+          <span class="footer-kicker">KEEP BUILDING</span>
+          <h2>Stay in the loop.</h2>
+          <p>Follow Rustyll releases and project news in the way that works for you.</p>
+        </div>
+        <div class="footer-update-actions">
+          <a class="footer-update-primary" href="{{ '/feed.xml' | relative_url }}">Follow the RSS feed <span aria-hidden="true">↗</span></a>
+          <a class="footer-update-secondary" href="{{ site.repository }}/releases">GitHub releases <span aria-hidden="true">↗</span></a>
         </div>
       </div>
-    </div>
-    
-    <!-- Bottom border -->
-    <div class="border-t border-gray-800 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <span class="text-gray-500 text-sm">Site Version: {{ site.version }}</span>
-      <p class="text-gray-500 text-sm">
-        Made with 
-        <span class="text-red-500 animate-pulse">❤</span> 
-        by the <a href="https://better-web.org" class="text-white hover:text-rust transition-colors">Better Web</a> community
-      </p>
+      <div class="footer-brand">
+        <div class="footer-brand-heading">{% include components/atoms/logo.html %}<span>BETTER WEB PROJECT</span></div>
+        <p>A static site generator written in Rust. Built for a faster, more open web.</p>
+        <div class="footer-socials" aria-label="Follow Rustyll">
+          <a href="{{ site.repository }}" aria-label="Rustyll on GitHub"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.4 7.86 10.92.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.67.41.35.78 1.04.78 2.1 0 1.52-.01 2.74-.01 3.11 0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg></a>
+          <a href="{{ '/feed.xml' | relative_url }}" aria-label="Rustyll RSS feed"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5a15 15 0 0 1 15 15M4 11a9 9 0 0 1 9 9"/><circle cx="5" cy="19" r="1" fill="currentColor"/></svg></a>
+          <a href="https://better-web.org" aria-label="Better Web"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-3 3-4 6-4 9s1 6 4 9m0-18c3 3 4 6 4 9s-1 6-4 9"/></svg></a>
+        </div>
       </div>
-      
-      <!-- Scroll indicator -->
-      <div class="hidden md:block text-gray-600 text-xs transition-opacity duration-300 opacity-70 hover:opacity-100">
-        <span class="inline-block transform animate-bounce" id="scroll-indicator">↑ Scroll to top</span>
-      </div>
+      <nav class="footer-links" aria-label="Build with Rustyll">
+        <h2>BUILD WITH RUSTYLL</h2>
+        <a href="{{ '/docs/' | relative_url }}"><span aria-hidden="true">↗</span>Documentation</a>
+        <a href="{{ '/tutorials/home/' | relative_url }}"><span aria-hidden="true">↗</span>Tutorials</a>
+        <a href="{{ '/docs/migrating/' | relative_url }}"><span aria-hidden="true">↗</span>Migration guides</a>
+        <a href="{{ '/docs/deployment/' | relative_url }}"><span aria-hidden="true">↗</span>Deployment</a>
+        <a href="{{ '/resources/' | relative_url }}"><span aria-hidden="true">↗</span>Resources</a>
+      </nav>
+      <nav class="footer-links" aria-label="The project">
+        <h2>THE PROJECT</h2>
+        <a href="{{ '/news/' | relative_url }}"><span aria-hidden="true">↗</span>News &amp; releases</a>
+        <a href="{{ '/docs/contributing/' | relative_url }}"><span aria-hidden="true">↗</span>Contributing</a>
+        <a href="{{ '/docs/support/' | relative_url }}"><span aria-hidden="true">↗</span>Support</a>
+        <a href="{{ '/philosophy/' | relative_url }}"><span aria-hidden="true">↗</span>Philosophy</a>
+        <a href="https://better-web.org"><span aria-hidden="true">↗</span>Better Web</a>
+      </nav>
     </div>
+    <div class="footer-bottom"><p>© {{ site.time | date: '%Y' }} Rustyll. Part of the <a href="https://better-web.org">Better Web initiative</a>.</p><a href="#top">Back to top ↑</a></div>
   </div>
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const scrollIndicator = document.getElementById('scroll-indicator');
-      
-      // Only show scroll indicator when page is scrolled down
-      window.addEventListener('scroll', function() {
-        if (window.scrollY > 300) {
-          scrollIndicator.style.opacity = '1';
-        } else {
-          scrollIndicator.style.opacity = '0';
-        }
-      });
-      
-      // Smooth scroll to top
-      document.querySelectorAll('a[href="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          e.preventDefault();
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
-        });
-      });
-    });
-  </script>
-</footer> 
+</footer>

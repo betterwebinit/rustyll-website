@@ -105,7 +105,7 @@ whitelist:
       <li>Use <a href="{{ '/docs/continuous-integration/github-actions/' | relative_url }}">GitHub Actions</a> to build and deploy your site</li>
     </ol>
     
-    See our <a href="{{ '/docs/deployment/github-pages/' | relative_url }}">GitHub Pages deployment guide</a> for details.
+    See our <a href="{{ '/docs/github-pages/' | relative_url }}">GitHub Pages deployment guide</a> for details.
   </p>
 </div>
 

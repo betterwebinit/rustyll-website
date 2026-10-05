@@ -1,31 +1,3 @@
-{% comment %}
-  News page organism component
-  @param content - The news content
-{% endcomment %}
-
-<section class="py-8 md:py-12 relative">
-  <!-- Background effects -->
-  <div class="absolute -top-40 -right-40 w-80 h-80 bg-rust/5 rounded-full blur-3xl"></div>
-  <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-rust/5 rounded-full blur-3xl"></div>
-  
-  <div class="container mx-auto px-4">
-    <!-- Mobile navigation -->
-    <div class="lg:hidden">
-      {% include components/molecules/mobile-news-nav.html %}
-    </div>
-    
-    <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
-      <!-- Main content -->
-      <div class="lg:w-3/4 order-2 lg:order-1">
-        <div class="prose prose-invert prose-lg prose-headings:text-white prose-headings:font-medium prose-a:text-rust prose-a:decoration-rust/30 hover:prose-a:text-rust-light hover:prose-a:decoration-rust-light/50 max-w-none">
-          {{ content }}
-        </div>
-      </div>
-      
-      <!-- Sidebar -->
-      <div class="lg:w-1/4 order-1 lg:order-2 lg:sticky lg:self-start lg:top-24">
-        {% include components/molecules/news-sidebar.html %}
-      </div>
-    </div>
-  </div>
-</section> 
+{% assign news_posts = site.posts %}{% if page.permalink contains '/releases/' %}{% assign news_posts = site.categories.release %}{% endif %}
+<section class="editorial-hero"><div class="container"><header class="page-heading"><span class="eyebrow">FROM THE PROJECT</span><h1>{{ page.title }}</h1><p>{{ page.description }}</p></header><div class="editorial-hero-mark" aria-hidden="true"><span></span><span></span><span></span></div></div></section>
+<section class="container editorial-page"><div class="news-grid"><div class="news-list">{% for post in news_posts %}<article class="news-card" itemscope itemtype="https://schema.org/NewsArticle"><div class="news-card-meta"><span>{{ post.categories | array_to_sentence_string }}</span><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%d %B %Y' }}</time></div><h2 itemprop="headline"><a itemprop="url" href="{{ post.url | relative_url }}">{{ post.title }}</a></h2><p>{{ post.description | default: post.excerpt | strip_html | truncate: 180 }}</p><a class="news-card-link" href="{{ post.url | relative_url }}">Read update ↗</a></article>{% else %}<div class="empty-state"><h2>No updates yet.</h2><p>Visit the official Rustyll releases page for the latest published artifacts.</p><a class="site-button site-button--secondary" href="{{ site.repository }}/releases">Published releases ↗</a></div>{% endfor %}</div><aside>{% include components/molecules/news-sidebar.html %}</aside></div></section>

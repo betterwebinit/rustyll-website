@@ -1,17 +1,5 @@
 ---
 layout: default
 ---
-
-<section class="py-8">
-  <div class="container mx-auto px-4">
-    <article class="prose prose-invert prose-headings:text-white prose-a:text-rust hover:prose-a:text-rust-light prose-pre:bg-gray-800 prose-pre:border prose-pre:border-gray-700 max-w-none">
-      {%- if page.permalink contains "resources" %}
-      <div class="mb-4 flex justify-end">
-        {% include improve_doc_link.html %}
-      </div>
-      {% endif -%}
-      <h1 class="text-3xl md:text-4xl font-bold mb-8 text-white">{{ page.title }}</h1>
-      {{ content }}
-    </article>
-  </div>
-</section>
+<section class="editorial-hero"><div class="container"><header class="page-heading"><span class="eyebrow">RUSTYLL / {{ page.title | upcase }}</span><h1>{{ page.title }}</h1>{% if page.description %}<p>{{ page.description }}</p>{% endif %}</header><div class="editorial-hero-mark" aria-hidden="true"><span></span><span></span><span></span></div></div></section>
+<section class="container editorial-page"><article class="prose prose-invert max-w-none">{{ content }}</article>{% if page.permalink contains 'resources' %}<div class="doc-feedback">{% include improve_doc_link.html %}</div>{% endif %}</section>

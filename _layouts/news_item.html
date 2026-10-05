@@ -1,5 +1,5 @@
 ---
 layout: default
 ---
-
-{% include components/organisms/news-item.html content=content %}
+<section class="editorial-hero"><div class="container"><header class="page-heading"><span class="eyebrow">RUSTYLL / {{ page.category | default: 'NEWS' | upcase }}</span><h1>{{ page.title }}</h1><p><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%d %B %Y' }}</time></p></header><div class="editorial-hero-mark" aria-hidden="true"><span></span><span></span><span></span></div></div></section>
+<section class="container editorial-page"><div class="news-grid"><div><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="{{ '/news/' | relative_url }}">News</a><span aria-hidden="true">/</span><span>{{ page.title }}</span></nav><article class="prose prose-invert max-w-none">{{ content }}</article><a class="news-back" href="{{ '/news/' | relative_url }}">← All news</a></div><aside>{% include components/molecules/news-sidebar.html %}</aside></div></section>

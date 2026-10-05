@@ -2,13 +2,5 @@
 layout: news
 title: Releases
 permalink: /news/releases/
-author: all
+description: Published Rustyll release news with links to official artifacts.
 ---
-
-{% for post in site.categories.release -%}
-  {% if forloop.index == 1 -%}
-    {% include news_item.html -%}
-  {% else -%}
-    {% include news_item_archive.html -%}
-  {% endif -%}
-{% endfor -%}

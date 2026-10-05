@@ -1,4 +1,5 @@
 ---
+published: false
 title: "Merging a Pull Request"
 ---
 

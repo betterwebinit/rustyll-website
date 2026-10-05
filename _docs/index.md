@@ -1,5 +1,6 @@
 ---
 title: Quickstart
+description: Install Rustyll, create a site, and serve it locally with the essential commands.
 permalink: /docs/
 redirect_from:
   - /docs/home/
@@ -7,15 +8,15 @@ redirect_from:
   - /docs/extras/
 ---
 
-Rustyll is a blazing fast static site generator written in Rust. It's a drop-in replacement for Jekyll that offers dramatic performance improvements through parallel processing. Rustyll takes text written in your favorite markup language and uses layouts to create a static website. You can tweak the site's look and feel, URLs, the data displayed on the page, and more.
+Rustyll is a static site generator written in Rust. Write content in Markdown, shape it with Liquid templates, and generate a website you can host as static files. If you have a Jekyll site, the familiar structure can help you get started; review plugins and configuration when you migrate.
 
 ## Why Choose Rustyll?
 
-* **Lightning Fast**: 10-100x faster than Jekyll thanks to Rust and parallel processing
-* **Fully Compatible**: Works with existing Jekyll sites with no modifications needed
-* **Modern Features**: Parallel builds, aggressive caching, and memory optimization
-* **Rust-powered**: Built on Rust's speed, memory safety, and thread safety
-* **Jekyll-familiar**: Uses the same project structure and Liquid templates
+* **Rust-powered**: Build a static site with a tool written in Rust.
+* **Content-focused**: Keep writing in Markdown and organize content in files.
+* **Familiar templates**: Use Liquid layouts and includes to shape your pages.
+* **Portable output**: Publish the generated files with your preferred static host.
+* **Migration guides**: Review the changes needed for an existing project.
 
 ## Prerequisites
 
@@ -51,27 +52,20 @@ rustyll serve
 Pass the `--livereload` option to `serve` to automatically refresh the page with each change you make to the source files: `rustyll serve --livereload`
 
 {: .note .info}
-For even faster build times, enable parallel and incremental builds: `rustyll serve --livereload --incremental --threads=auto`
+For build options available in your installed release, run `rustyll serve --help`.
 
 ## Migration from Jekyll
 
-If you have an existing Jekyll site, migration is simple:
+If you have an existing Jekyll site:
 
 1. Install Rustyll
 2. Navigate to your Jekyll site directory
-3. Run `rustyll serve`
+3. Follow the [Jekyll migration guide]({{ '/docs/migrating/jekyll-to-rustyll/' | relative_url }}) to review configuration, templates and plugins.
+4. Run `rustyll serve` and check the generated site.
 
-That's it! Rustyll will automatically detect and build your Jekyll site, typically 10-100x faster than Jekyll would.
+## Next steps
 
-## Performance Comparison
-
-| Site Size | Jekyll Build Time | Rustyll Build Time |
-|-----------|------------------|-------------------|
-| Small (50 pages) | 3.5s | 0.3s |
-| Medium (500 pages) | 32.0s | 1.8s |
-| Large (5000 pages) | 5m 20s | 9.5s |
-
-See [Parallel Builds]({{ '/docs/parallel-builds/' | relative_url }}) for more information on Rustyll's performance features.
+Explore the [step by step tutorial]({{ '/docs/step-by-step/01-setup/' | relative_url }}), [deployment guide]({{ '/docs/deployment/' | relative_url }}) and [published releases](https://github.com/betterwebinit/rustyll/releases). Build times vary by project; compare tools using your own site's content and configuration.
 
 If you encounter any errors during this process, check that you have installed all the prerequisites in [Requirements]({{ '/docs/installation/#requirements' | relative_url }}). 
 If you still have issues, see [Troubleshooting]({{ '/docs/troubleshooting/#configuration-problems' | relative_url }}).

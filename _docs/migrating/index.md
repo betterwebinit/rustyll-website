@@ -27,10 +27,10 @@ Rustyll can migrate from these static site generators:
 - [Cobalt](/docs/migrating/cobalt-to-rustyll/) - Rust-based static site generator
 - [Fresh](/docs/migrating/fresh-to-rustyll/) - Deno-based web framework
 - [Harp](/docs/migrating/harp-to-rustyll/) - Node.js static site generator
-- [Jigsaw](/docs/migrating/jigsaw-to-rustyll/) - PHP-based static site generator
-- [Metalsmith](/docs/migrating/metalsmith-to-rustyll/) - Node.js static site generator
-- [Nikola](/docs/migrating/nikola-to-rustyll/) - Python-based static site generator
-- [Octopress](/docs/migrating/octopress-to-rustyll/) - Jekyll-based blogging framework
+- Jigsaw (guide not yet available) - PHP-based static site generator
+- Metalsmith (guide not yet available) - Node.js static site generator
+- Nikola (guide not yet available) - Python-based static site generator
+- Octopress (guide not yet available) - Jekyll-based blogging framework
 
 ## Using the Migration Command
 

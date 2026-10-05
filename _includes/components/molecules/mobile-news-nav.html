@@ -29,7 +29,7 @@
       <h4 class="text-white text-sm font-medium mb-3">Categories</h4>
       <div class="flex flex-wrap gap-2">
         {% for category in site.categories %}
-          <a href="{{ '/news/categories/' | append: category[0] | relative_url }}" 
+          <a href="{{ '/news/releases/' | relative_url }}"
              class="px-2 py-1 bg-black/30 rounded-full text-xs text-gray-400 hover:text-rust transition flex items-center border border-gray-700/50 hover:border-rust/30">
             {{ category[0] }}
             <span class="ml-1 text-xs bg-rust/10 px-1.5 rounded-full text-rust">{{ category[1].size }}</span>
@@ -38,4 +38,4 @@
       </div>
     </div>
   </details>
-</div> 
+</div>

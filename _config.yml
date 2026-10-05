@@ -1,20 +1,21 @@
 ---
-version: 0.1.0
+version: 0.8.4
 name: Rustyll • Lightning fast static sites
 description: Transform your plain text into static websites and blogs
-url: https://rustyll.org
+url: https://rustyll.better-web.org
 repository: https://github.com/betterwebinit/rustyll
-site_branch: master
+website_repository: https://github.com/betterwebinit/rustyll-website
+site_branch: main
 timezone: America/Los_Angeles
 twitter:
   username: rustyllproject
 logo: "/img/logo-2x.png"
-google_analytics_id: UA-50755011-1
+google_analytics_id: ""
 google_site_verification: onQcXpAvtHBrUI5LlroHNE_FP0b2qvFyPq7VZw36iEY
 cloudinary_url: https://res.cloudinary.com/rustyll/image/upload/f_auto,q_auto,w_404
 css_framework: tailwind
 tailwind:
-  version: 4
+  version: 3
   colors:
     rust: "#D34516"
     rust-dark: "#B7410E"
@@ -68,8 +69,17 @@ strict_front_matter: true
 exclude:
 - icomoon-selection.json
 - readme.md
+- maintenance
+- scripts
+- tests
+- vendor
+- node_modules
+- package.json
+- package-lock.json
+- tailwind.config.cjs
+- assets/css/input.css
 threads: auto
-incremental: true
+incremental: false
 cache:
   strategy: aggressive
   duration: 3600
